@@ -33,17 +33,41 @@ def tradable_reason(tc, symbol: str, cache: dict) -> str | None:
     return cache[symbol]
 
 
+def open_theme_positions(con) -> list[tuple[str, str]]:
+    """(ticker, theme) of theme-book entries that are on Alpaca and not yet exited."""
+    return [(r["ticker"], r["theme"]) for r in con.execute(
+        """SELECT s.ticker, s.theme FROM orders o JOIN signals s ON s.mention_id = o.mention_id
+           WHERE s.book = 'theme' AND o.role = 'entry' AND o.status NOT IN ('canceled', 'expired', 'rejected')
+             AND NOT EXISTS (SELECT 1 FROM orders x WHERE x.mention_id = o.mention_id AND x.role = 'exit')""")]
+
+
+def theme_block_reason(th: dict, held: list[tuple[str, str]], ticker: str, theme: str) -> str | None:
+    """Why a theme-book buy must not go ahead, given what is already held or planned."""
+    if any(t == ticker for t, _ in held):
+        return f"already holding {ticker} from an earlier idea"
+    if sum(1 for _, k in held if k == theme) >= th["max_positions_per_theme"]:
+        return f"theme limit reached ({th['max_positions_per_theme']} positions in {theme})"
+    if (len(held) + 1) * th["notional_usd"] > th["max_total_usd"]:
+        return f"total theme limit reached (${th['max_total_usd']:,.0f})"
+    return None
+
+
 def plan_entries(con, rules, tc) -> list[dict]:
     session = current_session()
-    notional = float(rules["entry"]["notional_usd"])
+    th = rules.get("thematic") or {}
     cache: dict = {}
     plan = []
+    held = open_theme_positions(con)       # grows as theme buys are planned in this run
     for s in con.execute("""SELECT s.*, e.date AS ep_date, e.podcast, e.source FROM signals s
                             JOIN episodes e ON e.id = s.episode_id
-                            WHERE s.status = 'eligible' ORDER BY e.date, s.ticker""").fetchall():
-        intended = next_trading_day(dt.date.fromisoformat(s["ep_date"]))
+                            WHERE s.status = 'eligible' ORDER BY e.date, s.book, s.ticker""").fetchall():
+        is_theme = s["book"] == "theme"
+        ep_date = dt.date.fromisoformat(s["ep_date"])
+        intended = next_trading_day(ep_date)
+        notional = float(th["notional_usd"] if is_theme else rules["entry"]["notional_usd"])
         coid = entry_coid(s)
         row = {"client_order_id": coid, "symbol": s["ticker"], "side": "buy", "notional": notional,
+               "book": s["book"], "theme": s["theme"],
                "episode": s["episode_id"], "podcast": s["podcast"], "speaker": s["speaker"],
                "confidence": s["confidence"], "horizon": s["horizon"], "bucket": s["horizon_bucket"],
                "hold_days": s["hold_days"], "intended_open": intended.isoformat(),
@@ -54,14 +78,23 @@ def plan_entries(con, rules, tc) -> list[dict]:
         if existing:
             row.update(action="EXISTS", note=f"already on Alpaca ({existing['status']})"
                        + ("; not retried" if existing["status"] in DEAD else ""))
+        elif is_theme and (session - ep_date).days > th["max_age_days"]:
+            row.update(action="SKIP", note=f"stale idea: episode is {(session - ep_date).days} days old")
+        elif is_theme and (why := theme_block_reason(th, held, s["ticker"], s["theme"])):
+            row.update(action="SKIP", note=why)
         elif bad := tradable_reason(tc, s["ticker"], cache):
             con.execute("UPDATE signals SET status = 'skipped', skip_reason = ? WHERE mention_id = ?",
                         (bad, s["mention_id"]))
             row.update(action="SKIP", note=bad)
         else:
             late = (session - intended).days
-            row.update(action="BUY", note=(f"{late}d after intended open" if late > 0 else "")
+            row.update(action="SHADOW" if is_theme and th.get("mode", "shadow") != "paper" else "BUY",
+                       note=(f"{late}d after intended open" if late > 0 else "")
                        + ("" if tc else ("; " if late > 0 else "") + "tradability unchecked (no keys)"))
+            if row["action"] == "SHADOW":
+                row["note"] = ("theme shadow mode: not traded" + ("; " + row["note"] if row["note"] else ""))
+            if is_theme:
+                held.append((s["ticker"], s["theme"]))
         plan.append(row)
     con.commit()
     return plan
@@ -106,7 +139,7 @@ def main():
     if paper:
         place(con, tc, plan)
 
-    cols = ["action", "symbol", "side", "notional", "session", "intended_open", "est_exit", "hold_days",
+    cols = ["action", "book", "theme", "symbol", "side", "notional", "session", "intended_open", "est_exit", "hold_days",
             "bucket", "horizon", "episode", "podcast", "speaker", "confidence", "client_order_id", "note",
             "reasoning", "quote"]
     write_csv(REPORTS / "planned_orders.csv", plan, cols)

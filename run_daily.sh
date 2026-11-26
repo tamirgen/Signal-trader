@@ -7,6 +7,7 @@ cd "$(dirname "$0")"
 rm -f reports/planned_orders.csv reports/exits.csv reports/fetch_log.json
 
 python fetch.py
+python themes.py || echo "theme step failed; continuing"
 python ingest.py
 
 rc=0

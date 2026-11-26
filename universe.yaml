@@ -1,0 +1,102 @@
+# The only instruments the theme logic may pick from. DRAFT: review and edit freely.
+#
+# Each theme says what kind of world event helps it ("tailwind"), then lists liquid ETFs and
+# large stocks that capture it. Claude chooses a theme for an event and picks from that theme's
+# lists only; anything else is discarded. Every symbol is also checked against Alpaca before trading.
+# To add a theme, add a block here; to retire one, delete it.
+
+themes:
+  oil_gas_producers:
+    description: "Rising oil and gas prices, supply disruption (war, sanctions, OPEC cuts), energy security."
+    etfs: [XLE, XOP]
+    stocks: [XOM, CVX, COP, OXY, SLB]
+
+  lng_natural_gas:
+    description: "Higher natural gas / LNG demand, European or Asian energy shortages, LNG export growth."
+    etfs: [FCG]
+    stocks: [LNG, EQT]
+
+  airlines_transport:
+    description: "Falling fuel prices, end of an energy shock, strong travel and freight demand."
+    etfs: [JETS]
+    stocks: [DAL, UAL, LUV, UPS, FDX]
+
+  defense_aerospace:
+    description: "Geopolitical tension or war (China-Taiwan, Russia-Ukraine, Middle East), rising defense budgets."
+    etfs: [ITA, XAR]
+    stocks: [LMT, RTX, NOC, GD, LHX]
+
+  semiconductors_ai_compute:
+    description: "AI model and data center build-out, chip demand, memory and equipment spending."
+    etfs: [SMH, SOXX]
+    stocks: [NVDA, AVGO, AMD, TSM, MU, AMAT, LRCX, ASML, INTC]
+
+  cloud_software_ai_platforms:
+    description: "AI adoption by enterprises and consumers; hyperscaler and software platform winners."
+    etfs: [QQQ, IGV]
+    stocks: [MSFT, AMZN, GOOGL, META, ORCL, AAPL]
+
+  power_datacenter_infrastructure:
+    description: "Electricity demand from data centers, grid build-out, cooling, power generation."
+    etfs: [GRID, XLU]
+    stocks: [VRT, ETN, GEV, CEG, VST, EQIX, DLR]
+
+  nuclear_uranium:
+    description: "Nuclear power revival, energy security, uranium supply shortages."
+    etfs: [URA, NLR]
+    stocks: [CCJ, LEU]
+
+  cybersecurity:
+    description: "Rising cyber attacks, AI-enabled hacking, state-sponsored threats, security spending."
+    etfs: [CIBR, HACK]
+    stocks: [CRWD, PANW, ZS, FTNT]
+
+  gold_safe_haven:
+    description: "Geopolitical fear, currency or inflation worries, falling real rates, central bank gold buying."
+    etfs: [GLD, IAU]
+    stocks: [NEM, AEM]
+
+  critical_minerals_copper:
+    description: "China export controls on rare metals, electrification, reshoring of supply chains, copper shortages."
+    etfs: [REMX, COPX]
+    stocks: [MP, FCX, ALB, SCCO]
+
+  reshoring_infrastructure:
+    description: "Onshoring of manufacturing, tariffs, infrastructure and construction spending, industrial capex."
+    etfs: [XLI, PAVE]
+    stocks: [CAT, DE, URI, VMC]
+
+  agriculture_fertilizer:
+    description: "Food price inflation, crop disruption, war affecting grain, fertilizer supply shocks."
+    etfs: [MOO, DBA]
+    stocks: [ADM, CF, NTR, MOS]
+
+  rates_down_housing:
+    description: "Falling interest rates or mortgage rates, expected Fed cuts; benefits housing and long bonds."
+    etfs: [TLT, ITB, XLRE]
+    stocks: [DHI, LEN]
+
+  banks_rates_up:
+    description: "Higher-for-longer rates, steeper yield curve, deregulation, strong credit conditions."
+    etfs: [XLF, KRE]
+    stocks: [JPM, BAC, WFC, GS]
+
+  defensive_staples_healthcare:
+    description: "Recession or market-stress fears, falling growth; defensive earnings stability."
+    etfs: [XLP, XLV]
+    stocks: [PG, KO, WMT, COST, JNJ]
+
+  clean_energy_solar:
+    description: "Policy support for renewables, falling rates, power demand growth, energy independence."
+    etfs: [ICLN, TAN]
+    stocks: [NEE, FSLR, ENPH]
+
+  consumer_spending:
+    description: "Strong consumer, falling gasoline prices, tax cuts, rising confidence."
+    etfs: [XLY, XRT]
+    stocks: [HD, MCD, AMZN]
+
+  broad_us_equities:
+    description: "Broad risk-on moves: strong growth, easing policy, peace deals, falling uncertainty."
+    etfs: [SPY, QQQ, IWM]
+    stocks: []

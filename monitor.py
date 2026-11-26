@@ -11,7 +11,7 @@ import html
 import json
 from collections import defaultdict
 
-from common import REPORTS, connect_alpaca, db, latest_prices, load_rules, record_benchmarks
+from common import ROOT, REPORTS, connect_alpaca, db, latest_prices, load_rules, record_benchmarks
 
 
 def build_rows(con, marks: dict[str, float]) -> list[dict]:
@@ -29,7 +29,7 @@ def build_rows(con, marks: dict[str, float]) -> list[dict]:
                ORDER BY e.date, s.ticker"""):
         r = {"episode": s["episode_id"], "date": s["ep_date"], "podcast": s["podcast"], "source": s["source"],
              "speaker": s["speaker"], "ticker": s["ticker"], "confidence": s["confidence"],
-             "hold_days": s["hold_days"], "status": "not placed"}
+             "hold_days": s["hold_days"], "status": "not placed", "book": s["book"], "theme": s["theme"]}
         if s["entry_px"]:
             closed = s["exit_px"] is not None
             mark = s["exit_px"] if closed else marks.get(s["ticker"])
@@ -52,10 +52,10 @@ def build_rows(con, marks: dict[str, float]) -> list[dict]:
 
 def leaderboard(rows) -> list[dict]:
     out = []
-    for key in ("speaker", "source", "podcast"):
+    for key in ("book", "theme", "speaker", "source", "podcast"):
         groups = defaultdict(list)
         for r in rows:
-            if "ret" in r:
+            if "ret" in r and r.get(key):
                 groups[r[key]].append(r)
         for name, rs in groups.items():
             alphas = [r["alpha"] for r in rs if "alpha" in r]
@@ -156,6 +156,45 @@ def recent_signals_html(con, limit=30) -> str:
             f'<th>Direction</th><th>Decision</th></tr></thead><tbody>{"".join(out)}</tbody></table></div>')
 
 
+def theme_ideas_html(con, mode: str, limit: int = 14) -> str:
+    try:
+        episodes = json.loads((ROOT / "signals.json").read_text())
+    except FileNotFoundError:
+        return ""
+    state = {(r["episode_id"], r["ticker"]): r for r in con.execute(
+        """SELECT s.episode_id, s.ticker, s.status, s.skip_reason, o.status AS order_status
+           FROM signals s LEFT JOIN orders o ON o.mention_id = s.mention_id AND o.role = 'entry'
+           WHERE s.book = 'theme'""")}
+    items = []
+    for ep in sorted(episodes, key=lambda e: e["date"], reverse=True):
+        for i in ep.get("theme_ideas") or []:
+            items.append((ep, i))
+    if not items:
+        return '<div class="card empty">No theme ideas yet. They appear after the next daily run.</div>'
+    out = []
+    for ep, i in items[:limit]:
+        picks = []
+        for t in i["picks"]:
+            st = state.get((ep["id"], t))
+            if st is None:
+                label = "not traded"
+            elif st["order_status"]:
+                label = "bought"
+            elif st["status"] == "eligible":
+                label = "shadow" if mode != "paper" else "queued"
+            else:
+                label = ("too weak to trade" if (st["skip_reason"] or "").startswith("theme idea strength")
+                         else st["skip_reason"] or "not traded")
+            picks.append(f'<span class="chip"><b>{esc(t)}</b> <span class="mute">· {esc(label)}</span></span>')
+        effect = f'<span class="{"pos" if i["effect"] == "tailwind" else "neg"}">{esc(i["effect"])}</span> · {esc(i["strength"])}'
+        out.append(f'<tr><td>{esc(ep["date"])}<div class="mute small">{esc(ep["podcast"])}</div></td>'
+                   f'<td><b>{esc(i["event"])}</b><div class="mute small wrapcell">{esc(i["causal_chain"])}</div>'
+                   f'<div class="mute small wrapcell">Wrong if: {esc(i["invalidation"])}</div></td>'
+                   f'<td>{esc(i["theme"].replace("_", " "))}</td><td>{effect}</td><td class="chips-cell">{"".join(picks) or "–"}</td></tr>')
+    return ('<div class="wrap"><table><thead><tr><th>Episode</th><th>World event → why</th><th>Theme</th>'
+            f'<th>Effect</th><th>Picks</th></tr></thead><tbody>{"".join(out)}</tbody></table></div>')
+
+
 def sources_html(a: dict | None) -> str:
     src = (a or {}).get("sources", [])
     if not src:
@@ -185,10 +224,11 @@ def render(rows, board, n_skipped, has_keys, con=None, activity=None) -> str:
     stamp = dt.datetime.now().astimezone().strftime("%b %d, %Y · %H:%M %Z")
     board_cols = [("by", "Group"), ("name", "Name"), ("signals", "Signals"), ("hit_rate", "Hit rate"),
                   ("avg_return", "Avg return"), ("avg_alpha", "Avg alpha"), ("pnl", "P&L")]
-    pos_cols = [("ticker", "Ticker"), ("status", "Status"), ("speaker", "Speaker"), ("podcast", "Source"),
+    pos_cols = [("ticker", "Ticker"), ("book", "Book"), ("status", "Status"), ("speaker", "Speaker"), ("podcast", "Source"),
                 ("entry_date", "Entry"), ("entry_px", "Entry px"), ("mark_px", "Last / exit px"),
                 ("ret", "Return"), ("spy_ret", "SPY"), ("alpha", "Alpha"), ("pnl", "P&L"), ("hold_days", "Hold days")]
     today = esc((activity or {}).get("date", ""))
+    mode = (load_rules().get("thematic") or {}).get("mode", "shadow")
     return f"""<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Signal Trader</title>
@@ -216,6 +256,7 @@ q {{ display:block; margin-top:4px; font-style:italic; }}
 .tag {{ display:inline-block; font-size:11px; font-weight:600; letter-spacing:.04em; padding:1px 7px; border-radius:6px; margin-right:8px; }}
 .tag.buy {{ background:var(--chip-ok); color:var(--pos); }} .tag.sell {{ background:var(--chip-bad); color:var(--neg); }}
 .tag.ep {{ background:var(--bg); color:var(--accent); border:1px solid var(--line); }} .tag.err {{ background:var(--chip-bad); color:var(--neg); }}
+.chips-cell {{ white-space:normal; min-width:170px; }} .chips-cell .chip {{ display:inline-block; margin:0 6px 4px 0; }}
 .chips {{ display:flex; flex-wrap:wrap; gap:8px; margin-top:12px; }}
 .chip {{ font-size:12px; padding:4px 10px; border-radius:999px; border:1px solid var(--line); background:var(--card); }}
 .chip.ok::before {{ content:"●"; color:var(--pos); margin-right:6px; }} .chip.bad::before {{ content:"●"; color:var(--neg); margin-right:6px; }}
@@ -223,7 +264,7 @@ q {{ display:block; margin-top:4px; font-style:italic; }}
 table {{ border-collapse:collapse; width:100%; font-variant-numeric:tabular-nums; }}
 th, td {{ padding:10px 14px; border-bottom:1px solid var(--line); white-space:nowrap; text-align:left; vertical-align:top; }}
 th {{ font-size:12px; color:var(--mute); font-weight:600; }} tr:last-child td {{ border-bottom:0; }}
-.wrapcell {{ white-space:normal; max-width:520px; }}
+.wrapcell {{ white-space:normal; max-width:400px; }}
 .num {{ text-align:right; }} .pos {{ color:var(--pos); }} .neg {{ color:var(--neg); }} .empty {{ color:var(--mute); text-align:center; }}
 footer {{ font-size:12px; color:var(--mute); margin-top:32px; }}
 </style></head><body><main>
@@ -232,6 +273,7 @@ footer {{ font-size:12px; color:var(--mute); margin-top:32px; }}
 <div class="tiles">{tiles}</div>
 <h2>Today {('· ' + today) if today else ''}</h2>{activity_html(activity)}
 <h2>Positions</h2>{table(rows, pos_cols)}
+<h2>Theme ideas · {esc(mode)} mode</h2>{theme_ideas_html(con, mode) if con is not None else ''}
 <h2>Leaderboard</h2>{table(board, board_cols)}
 <h2>Recent signals</h2>{recent_signals_html(con) if con is not None else ''}
 <footer>Return runs from the entry fill to the exit fill, or to the latest price while open. SPY is a hypothetical $1,000

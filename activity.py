@@ -46,6 +46,15 @@ def build() -> dict:
                 FROM signals s JOIN episodes e ON e.id = s.episode_id
                 WHERE s.episode_id IN ({q}) ORDER BY s.status, s.episode_id""", new_ids)]
     buys = [r for r in plan if r.get("action") == "BUY"]
+    shadow = [r for r in plan if r.get("action") == "SHADOW"]
+    ideas = []
+    try:
+        for ep in json.loads((ROOT / "signals.json").read_text()):
+            if ep["id"] in new_ids:
+                ideas += [{**i, "episode": ep["id"], "podcast": ep["podcast"], "date": ep["date"]}
+                          for i in ep.get("theme_ideas") or []]
+    except FileNotFoundError:
+        pass
     return {
         "date": today,
         "generated": dt.datetime.now(ET).strftime("%Y-%m-%d %H:%M ET"),
@@ -53,6 +62,8 @@ def build() -> dict:
         "episodes": fetch.get("episodes", []),
         "new_signals": signals,
         "buys": buys,
+        "shadow": shadow,
+        "theme_ideas": ideas,
         "skipped_orders": [r for r in plan if r.get("action") == "SKIP"],
         "exits": exits,
         "errors": fetch.get("errors", []),
@@ -80,8 +91,10 @@ def to_markdown(a: dict) -> str:
     if not a["buys"]:
         L.append("No new trades." if a["market_open_today"] else "Market closed today — no trading.")
     for b in a["buys"]:
-        L += [f"### BUY {b['symbol']} — ${float(b['notional']):,.0f}",
-              f"- **Why:** {b['speaker']} ({b['podcast']}), {b['confidence']} confidence, bullish. {b.get('reasoning') or ''}",
+        who = (f"Theme logic ({b['theme']}) from {b['podcast']}" if b.get("book") == "theme"
+               else f"{b['speaker']} ({b['podcast']})")
+        L += [f"### BUY {b['symbol']} — ${float(b['notional']):,.0f}" + (" · theme" if b.get("book") == "theme" else ""),
+              f"- **Why:** {who}, {b['confidence']} confidence, bullish. {b.get('reasoning') or ''}",
               *( [f"- **Quote:** “{b['quote']}”"] if b.get("quote") else [] ),
               f"- **Plan:** hold {b['hold_days']} trading days ({b['bucket']} horizon: “{b['horizon']}”), exit around {b['est_exit']}",
               f"- **Status:** {b['note'] or 'planned'}", ""]

@@ -44,11 +44,10 @@ CREATE TABLE IF NOT EXISTS signals (
     ticker TEXT,                           -- normalized ticker_stated
     horizon_bucket TEXT, hold_days INTEGER,
     status TEXT NOT NULL,                  -- eligible | skipped
-    skip_reason TEXT
+    skip_reason TEXT,
+    book TEXT NOT NULL DEFAULT 'speaker',  -- 'speaker' (a named stock) | 'theme' (from a world event)
+    theme TEXT                             -- theme key from universe.yaml, for the theme book
 );
--- one tradable signal per ticker per episode
-CREATE UNIQUE INDEX IF NOT EXISTS uq_signal_episode_ticker
-    ON signals(episode_id, ticker) WHERE status = 'eligible';
 CREATE TABLE IF NOT EXISTS orders (
     client_order_id TEXT PRIMARY KEY,
     mention_id TEXT REFERENCES signals(mention_id),
@@ -73,6 +72,10 @@ def db_path() -> Path:
 MIGRATIONS = [  # columns added after the first release; ignored if already present
     "ALTER TABLE episodes ADD COLUMN title TEXT", "ALTER TABLE episodes ADD COLUMN url TEXT",
     "ALTER TABLE signals ADD COLUMN reasoning TEXT", "ALTER TABLE signals ADD COLUMN quote TEXT",
+    "ALTER TABLE signals ADD COLUMN book TEXT NOT NULL DEFAULT 'speaker'", "ALTER TABLE signals ADD COLUMN theme TEXT",
+    "DROP INDEX IF EXISTS uq_signal_episode_ticker",
+    # one tradable signal per ticker per episode, per book
+    "CREATE UNIQUE INDEX IF NOT EXISTS uq_signal_book ON signals(episode_id, ticker, book) WHERE status = 'eligible'",
 ]
 
 
@@ -218,12 +221,17 @@ def data_client():
     return StockHistoricalDataClient(_env("ALPACA_KEY"), _env("ALPACA_SECRET"))
 
 
+def _coid_base(s) -> str:
+    book = s["book"] if "book" in s.keys() else "speaker"
+    return f"{s['episode_id']}-{'T-' if book == 'theme' else ''}{s['ticker']}"
+
+
 def entry_coid(s) -> str:
-    return f"{s['episode_id']}-{s['ticker']}"[:128]
+    return _coid_base(s)[:128]
 
 
 def exit_coid(s) -> str:
-    return f"{s['episode_id']}-{s['ticker']}-exit"[:128]
+    return (_coid_base(s) + "-exit")[:128]
 
 
 def fetch_order(tc, coid: str):

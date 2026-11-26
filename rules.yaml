@@ -37,3 +37,15 @@ horizon_default: medium
 data_feed: iex
 
 ticker_aliases: {}                   # e.g. {GOOG.L: GOOGL}; applied after normalization
+
+# Theme logic: turns world events (war, oil, rates, AI build-out...) into stock ideas.
+# See universe.yaml for what it may pick from. Theme trades are a separate "book" so their
+# results are measured apart from trades on stocks a speaker named.
+thematic:
+  mode: shadow                 # shadow = record ideas and show them, place NO orders; paper = place them
+  notional_usd: 500            # per position
+  max_total_usd: 3000          # open theme positions in total (= 6 positions at $500)
+  max_positions_per_theme: 2   # e.g. one ETF + one stock
+  max_picks_per_idea: 2
+  min_strength: medium         # ideas weaker than this are logged, not traded
+  max_age_days: 7              # ignore ideas from episodes older than this when it's time to buy
