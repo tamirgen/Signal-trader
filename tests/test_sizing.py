@@ -28,7 +28,7 @@ def call(ep_id, date, podcast, ticker="NVDA", confidence="medium", ideas=None):
 
 class Tiers(unittest.TestCase):
     def test_tiers(self):
-        self.assertEqual([trade.target_usd(SIZING, n) for n in (1, 2, 3, 4, 9)], [500, 750, 1000, 1000, 1000])
+        self.assertEqual([trade.target_usd(SIZING, n) for n in (1, 2, 3, 4, 9)], [500, 1000, 1000, 1000, 1000])
 
     def test_cap_always_wins(self):
         capped = {**SIZING, "per_position_cap_usd": 600}
@@ -61,14 +61,15 @@ class Planning(unittest.TestCase):
 
     def test_second_source_doubles_down(self):
         plan = self.plan([call("a", "2026-11-18", "Show A"), call("b", "2026-11-20", "Show B")])
-        self.assertEqual(self.buys(plan), [(500, 1), (250, 2)])  # $750 in total
+        self.assertEqual(self.buys(plan), [(500, 1), (500, 2)])  # $1,000 in total
 
-    def test_third_source_reaches_the_cap(self):
+    def test_third_source_does_not_exceed_the_cap(self):
         plan = self.plan([call("a", "2026-11-16", "Show A"), call("b", "2026-11-18", "Show B"),
                           call("c", "2026-11-20", "Show C")])
         got = self.buys(plan)
-        self.assertEqual(got, [(500, 1), (250, 2), (250, 3)])
+        self.assertEqual(got, [(500, 1), (500, 2)])  # the third source adds nothing: already at $1,000
         self.assertEqual(sum(n for n, _ in got), 1000)
+        self.assertIn("already hold $1,000", [r["note"] for r in plan if r["action"] == "SKIP"][0])
 
     def test_fourth_source_cannot_exceed_the_cap(self):
         plan = self.plan([call(k, f"2026-11-{15 + i}", f"Show {k}") for i, k in enumerate("abcd")])

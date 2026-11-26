@@ -12,11 +12,12 @@ episode_exclusions:
     reason: "Table Four 2026-11-20 metadata is wrong, pending fix"
 
 # Position sizing, for every trade in both books. Orders are market orders (time in force DAY).
-# A "source" is a distinct show or event (podcast name); repeat episodes of one show count once.
-# When another source backs the same ticker, we add the difference up to the new target ("double down").
+# Rule: at most $500 in any single stock or ETF. Exception: when at least 2 independent sources back the
+# same ticker (3 is better), we double down to $1,000. A "source" is a distinct show or event (podcast
+# name); repeat episodes of one show count once. A later source tops up an existing position by the difference.
 sizing:
-  per_position_cap_usd: 1000         # never hold more than this in one ticker, all trades combined
-  by_sources: {1: 500, 2: 750, 3: 1000}   # 3 or more sources -> the cap
+  per_position_cap_usd: 1000         # hard ceiling per ticker, all trades combined
+  by_sources: {1: 500, 2: 1000}      # 1 source -> $500; 2 or more sources -> $1,000
   corroboration_window_days: 14      # sources must be within this many days of each other
   min_order_usd: 50                  # ignore top-ups smaller than this
 

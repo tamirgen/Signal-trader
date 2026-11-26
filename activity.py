@@ -98,7 +98,7 @@ def to_markdown(a: dict) -> str:
               *( [f"- **Quote:** “{b['quote']}”"] if b.get("quote") else [] ),
               f"- **Size:** ${float(b['notional']):,.0f} now; {b.get('n_sources', 1)} source(s) back it "
               f"({b.get('sources') or b['podcast']}), so the target is ${float(b.get('target') or b['notional']):,.0f} "
-              f"(already held ${float(b.get('held') or 0):,.0f}; cap $1,000 per position)",
+              f"(already held ${float(b.get('held') or 0):,.0f}; rule: $500 per ticker, $1,000 with 2+ sources)",
               f"- **Plan:** hold {b['hold_days']} trading days ({b['bucket']} horizon: “{b['horizon']}”), exit around {b['est_exit']}",
               f"- **Status:** {b['note'] or 'planned'}", ""]
 

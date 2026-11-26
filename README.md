@@ -26,9 +26,20 @@ The job commits new signals, feed state and the activity log back to the repo, s
 
 ## Position sizing and double-down (`sizing:` in `rules.yaml`)
 
-- **Never more than $1,000 in one ticker**, counting every trade and both books together.
-- **Size grows with corroboration.** A source is a distinct show or event (repeat episodes of one show count once), counted within 14 days: 1 source buys **$500**, 2 sources bring the position to **$750**, 3 or more to **$1,000**. When a second or third source backs a ticker we already hold, the system buys only the difference.
+- **At most $500 in any single stock or ETF.**
+- **Exception: with 2 or more independent sources backing the same ticker (3 is better), we double down to $1,000**, which is the ceiling. A source is a distinct show or event (repeat episodes of one show count once), counted within 14 days. When a second source backs a ticker we already hold, the system buys only the difference.
 - Every order's size, the sources behind it, and what was already held are written into the daily report.
+
+## Paper account only
+
+This project only ever trades Alpaca's **paper account** (simulated money). It cannot trade a real account:
+- The code refuses to start unless `ALPACA_BASE_URL` is exactly `https://paper-api.alpaca.markets`, and the workflow hard-codes that URL.
+- Before any order it checks that the account number starts with `PA` (Alpaca's paper accounts) and aborts otherwise.
+- Real-account keys are rejected by Alpaca's paper server anyway. Tests in `tests/test_safety.py` cover both checks.
+
+## Test plan
+
+The system runs unattended for about one month (from 2026-11-27) as a test of the tool: how its stock calls, theme ideas and double-down rule perform against SPY. Holding periods are 20 / 60 / 180 trading days, so most positions will still be open at the end; results are measured against SPY from each entry (unrealized), not as closed trades.
 
 ## Theme logic: from world events to stocks
 
