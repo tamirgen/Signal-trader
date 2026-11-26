@@ -37,7 +37,7 @@ Cost: roughly $0.50 per two-hour episode (check Deepgram's pricing page for the 
 
 1. Open https://github.com/tamirgen/signal-trader/settings/pages.
 2. Under **Build and deployment**, find **Source** and choose **GitHub Actions** from the dropdown. It saves automatically.
-3. Next time the daily job runs, the dashboard appears at **https://tamirgen.github.io/signal-trader/**.
+3. Next time the daily job runs, the dashboard appears at **https://tamirgen.github.io/Signal-trader/**.
 
 The repo is public, so the dashboard is public: it shows paper positions, P&L and signals, never keys. To keep it private, make the repo private (Settings → General → Danger Zone → Change visibility); Pages on private repos requires a paid GitHub plan.
 

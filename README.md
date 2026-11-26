@@ -7,7 +7,7 @@ Watches finance podcasts, YouTube channels and Fed press conferences for new epi
 | I want to see… | Go to |
 |---|---|
 | **My actual investments** (positions, orders, balance; paper money) | https://app.alpaca.markets → switch to **Paper** (top left) → **Positions**, **Orders**, **Portfolio** |
-| **Performance vs SPY, leaderboard, recent signals** | Dashboard: https://tamirgen.github.io/signal-trader/ |
+| **Performance vs SPY, leaderboard, recent signals** | Dashboard: https://tamirgen.github.io/Signal-trader/ |
 | **What happened today and why** | `activity/` folder: one file per day, https://github.com/tamirgen/signal-trader/tree/main/activity |
 | **Did the daily job run, did anything fail** | https://github.com/tamirgen/signal-trader/actions |
 | **Every signal extracted so far** | `signals.json` |
