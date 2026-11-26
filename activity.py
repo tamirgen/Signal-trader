@@ -96,6 +96,9 @@ def to_markdown(a: dict) -> str:
         L += [f"### BUY {b['symbol']} — ${float(b['notional']):,.0f}" + (" · theme" if b.get("book") == "theme" else ""),
               f"- **Why:** {who}, {b['confidence']} confidence, bullish. {b.get('reasoning') or ''}",
               *( [f"- **Quote:** “{b['quote']}”"] if b.get("quote") else [] ),
+              f"- **Size:** ${float(b['notional']):,.0f} now; {b.get('n_sources', 1)} source(s) back it "
+              f"({b.get('sources') or b['podcast']}), so the target is ${float(b.get('target') or b['notional']):,.0f} "
+              f"(already held ${float(b.get('held') or 0):,.0f}; cap $1,000 per position)",
               f"- **Plan:** hold {b['hold_days']} trading days ({b['bucket']} horizon: “{b['horizon']}”), exit around {b['est_exit']}",
               f"- **Status:** {b['note'] or 'planned'}", ""]
 

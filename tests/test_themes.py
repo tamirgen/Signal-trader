@@ -63,7 +63,7 @@ class IngestAndLimits(unittest.TestCase):
         self.addCleanup(env.stop)
         common._alpaca_days = None
         self.rules = common.load_rules()
-        self.rules["thematic"].update(mode="paper", notional_usd=500, max_total_usd=3000,
+        self.rules["thematic"].update(mode="paper", max_total_usd=3000,
                                       max_positions_per_theme=2, max_age_days=7)
 
     def load(self, episodes):
@@ -147,11 +147,12 @@ class IngestAndLimits(unittest.TestCase):
         mid = con.execute("SELECT mention_id FROM signals WHERE episode_id = 'a1' AND book = 'theme'").fetchone()[0]
         con.execute("INSERT INTO orders (client_order_id, mention_id, role, symbol, side, status) "
                     "VALUES ('a1-T-ITA', ?, 'entry', 'ITA', 'buy', 'filled')", (mid,))
+        con.execute("UPDATE orders SET notional = 500 WHERE client_order_id = 'a1-T-ITA'")
         con.commit()
         plan = {r["episode"]: r for r in self.plan(con) if r["book"] == "theme"}
         self.assertEqual(plan["a1"]["action"], "EXISTS")
         self.assertEqual(plan["a2"]["action"], "SKIP")
-        self.assertIn("already holding", plan["a2"]["note"])
+        self.assertIn("already hold", plan["a2"]["note"])
 
 
 if __name__ == "__main__":

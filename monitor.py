@@ -86,17 +86,18 @@ FMT = {"ret": pct, "spy_ret": pct, "alpha": pct, "avg_return": pct, "avg_alpha":
        "hit_rate": lambda x: "–" if x is None else f"{x * 100:.0f}%"}
 
 
-def table(rows, cols: list[tuple[str, str]]) -> str:
-    head = "".join(f'<th class="{"num" if c in FMT or c in ("signals", "hold_days") else ""}">{html.escape(label)}</th>'
+def table(rows, cols: list[tuple[str, str]], fmt: dict | None = None) -> str:
+    fmt = fmt or FMT
+    head = "".join(f'<th class="{"num" if c in FMT or c in ("signals", "hold_days", "ideas") else ""}">{html.escape(label)}</th>'
                    for c, label in cols)
     body = []
     for r in rows:
         cells = []
         for c, _ in cols:
             v = r.get(c)
-            text = FMT.get(c, lambda x: "–" if x is None else str(x))(v)
+            text = fmt.get(c, lambda x: "–" if x is None else str(x))(v)
             cls = (" pos" if v > 0 else " neg" if v < 0 else "") if c in SIGNED and isinstance(v, (int, float)) else ""
-            num_cls = " num" if c in FMT or c in ("signals", "hold_days") else ""
+            num_cls = " num" if c in FMT or c in ("signals", "hold_days", "ideas") else ""
             cells.append(f'<td class="{cls}{num_cls}">{html.escape(text)}</td>')
         body.append("<tr>" + "".join(cells) + "</tr>")
     empty = f'<tr><td colspan="{len(cols)}" class="empty">Nothing yet</td></tr>'
@@ -195,6 +196,26 @@ def theme_ideas_html(con, mode: str, limit: int = 14) -> str:
             f'<th>Effect</th><th>Picks</th></tr></thead><tbody>{"".join(out)}</tbody></table></div>')
 
 
+def shadow_html(shadow_data, enabled: bool) -> str:
+    if not enabled:
+        return ""
+    if shadow_data is None:
+        return '<div class="card empty">The shadow account needs Alpaca keys for price data.</div>'
+    rows, summary = shadow_data
+    if not summary:
+        return '<div class="card empty">No shadow results yet: ideas need a trading day or more to produce a return.</div>'
+    sum_cols = [("group", "Group"), ("ideas", "Ideas"), ("hit_rate", "Hit rate"), ("beat_spy", "Beat SPY"),
+                ("avg_return", "Avg return"), ("avg_alpha", "Avg alpha"), ("pnl", "Hypothetical P&L")]
+    fmt = {**FMT, "beat_spy": FMT["hit_rate"]}
+    t1 = table(summary, sum_cols, fmt)
+    pick_cols = [("ep_date", "Episode"), ("ticker", "Pick"), ("theme", "Theme"), ("strength", "Strength"),
+                 ("status", "Status"), ("entry_date", "Entry"), ("ret", "Return"), ("spy_ret", "SPY"),
+                 ("alpha", "Alpha"), ("pnl", "P&L")]
+    recent = sorted([r for r in rows if "ret" in r], key=lambda r: r["ep_date"], reverse=True)[:15]
+    t2 = table([{**r, "theme": r["theme"].replace("_", " ")} for r in recent], pick_cols, fmt)
+    return t1 + '<div style="height:12px"></div>' + t2
+
+
 def sources_html(a: dict | None) -> str:
     src = (a or {}).get("sources", [])
     if not src:
@@ -204,7 +225,7 @@ def sources_html(a: dict | None) -> str:
     return f'<div class="chips">{chips}</div>'
 
 
-def render(rows, board, n_skipped, has_keys, con=None, activity=None) -> str:
+def render(rows, board, n_skipped, has_keys, con=None, activity=None, shadow_data=None, shadow_on=False) -> str:
     measured = [r for r in rows if "ret" in r]
     alphas = [r["alpha"] for r in measured if "alpha" in r]
     pnl = sum(r.get("pnl", 0) for r in measured)
@@ -228,7 +249,9 @@ def render(rows, board, n_skipped, has_keys, con=None, activity=None) -> str:
                 ("entry_date", "Entry"), ("entry_px", "Entry px"), ("mark_px", "Last / exit px"),
                 ("ret", "Return"), ("spy_ret", "SPY"), ("alpha", "Alpha"), ("pnl", "P&L"), ("hold_days", "Hold days")]
     today = esc((activity or {}).get("date", ""))
-    mode = (load_rules().get("thematic") or {}).get("mode", "shadow")
+    rules_ = load_rules()
+    mode = (rules_.get("thematic") or {}).get("mode", "shadow")
+    shadow_notional = (rules_.get("shadow") or {}).get("notional_usd", 500)
     return f"""<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Signal Trader</title>
@@ -274,6 +297,7 @@ footer {{ font-size:12px; color:var(--mute); margin-top:32px; }}
 <h2>Today {('· ' + today) if today else ''}</h2>{activity_html(activity)}
 <h2>Positions</h2>{table(rows, pos_cols)}
 <h2>Theme ideas · {esc(mode)} mode</h2>{theme_ideas_html(con, mode) if con is not None else ''}
+{('<h2>Shadow account · every theme idea, hypothetical $' + str(int(shadow_notional)) + ' each</h2>' + shadow_html(shadow_data, shadow_on)) if shadow_on else ''}
 <h2>Leaderboard</h2>{table(board, board_cols)}
 <h2>Recent signals</h2>{recent_signals_html(con) if con is not None else ''}
 <footer>Return runs from the entry fill to the exit fill, or to the latest price while open. SPY is a hypothetical $1,000
@@ -310,11 +334,36 @@ def main():
                "entry_px", "qty", "mark_px", "exit_date", "ret", "spy_ret", "alpha", "pnl", "hold_days"])
     write_csv(REPORTS / "leaderboard.csv", board,
               ["by", "name", "signals", "hit_rate", "avg_return", "avg_alpha", "pnl"])
+    shadow_on = bool((rules.get("shadow") or {}).get("enabled"))
+    shadow_data = None
+    if shadow_on and tc is not None:
+        import shadow
+        try:
+            picks = shadow.shadow_picks(con)
+            if picks:
+                start = min(dt.date.fromisoformat(p["ep_date"]) for p in picks)
+                syms = {p["ticker"] for p in picks} | {rules["benchmark"]["symbol"]}
+                bars = shadow.fetch_bars(syms, start, dt.date.today(), rules["data_feed"])
+                srows = shadow.evaluate(picks, bars, dt.date.today(), rules["benchmark"]["symbol"],
+                                        float(rules["shadow"]["notional_usd"]))
+                shadow_data = (srows, shadow.summarize(srows))
+                for g in shadow_data[1]:
+                    print(f"  shadow {g['group']:<22} ideas {g['ideas']:>3}  hit {g['hit_rate']:.0%}  "
+                          f"avg return {g['avg_return']:+.2%}  avg alpha {g['avg_alpha']:+.2%}")
+                write_csv(REPORTS / "shadow.csv", srows,
+                          ["ep_date", "podcast", "ticker", "theme", "strength", "traded", "status", "entry_date",
+                           "exit_date", "entry_px", "mark_px", "ret", "spy_ret", "alpha", "pnl", "event"])
+                write_csv(REPORTS / "shadow_summary.csv", shadow_data[1],
+                          ["group", "ideas", "hit_rate", "beat_spy", "avg_return", "avg_alpha", "pnl"])
+            else:
+                shadow_data = ([], [])
+        except Exception as exc:  # the dashboard must still build if price data is unavailable
+            print(f"shadow account skipped: {type(exc).__name__}: {str(exc)[:200]}")
     try:
         activity = json.loads((REPORTS / "activity.json").read_text())
     except FileNotFoundError:
         activity = None
-    (REPORTS / "report.html").write_text(render(rows, board, n_skipped, tc is not None, con, activity))
+    (REPORTS / "report.html").write_text(render(rows, board, n_skipped, tc is not None, con, activity, shadow_data, shadow_on))
     print(f"wrote {REPORTS / 'report.html'}, signals.csv, leaderboard.csv "
           f"({sum('ret' in r for r in rows)} signals with prices)")
 

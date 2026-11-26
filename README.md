@@ -24,14 +24,19 @@ Nothing here is done by hand. Each morning GitHub runs the code in this repo (no
 
 The job commits new signals, feed state and the activity log back to the repo, so `signals.json` and `activity/` are the full history.
 
+## Position sizing and double-down (`sizing:` in `rules.yaml`)
+
+- **Never more than $1,000 in one ticker**, counting every trade and both books together.
+- **Size grows with corroboration.** A source is a distinct show or event (repeat episodes of one show count once), counted within 14 days: 1 source buys **$500**, 2 sources bring the position to **$750**, 3 or more to **$1,000**. When a second or third source backs a ticker we already hold, the system buys only the difference.
+- Every order's size, the sources behind it, and what was already held are written into the daily report.
+
 ## Theme logic: from world events to stocks
 
 Besides trading stocks a speaker names, the system turns world events (war, oil, rates, AI build-out, supply chains) into stock ideas.
 
 1. `themes.py` has Claude read each episode's summary, themes and views. For every market-relevant event it picks the matching theme from `universe.yaml` and the ETFs/stocks in it that should benefit, with a cause-and-effect chain and what would prove it wrong. Claude can only choose from the lists in `universe.yaml`; anything else is discarded.
-2. `ingest.py` turns the tailwind picks into a separate **theme book**. `trade.py` sizes and limits them from the `thematic:` block in `rules.yaml`: $500 per position, at most 2 positions per theme, at most $3,000 open in total, no ideas from episodes older than 7 days, and no second buy of a ticker already held.
-3. **Shadow mode is the default** (`thematic.mode: shadow`): ideas and the picks they would produce are recorded and shown on the dashboard and in the daily report, but no orders are placed. Set `mode: paper` to place them.
-4. Theme trades are measured separately (leaderboard groups "book" and "theme"), so you can see whether the theme logic adds anything compared with SPY.
+2. `ingest.py` turns the tailwind picks of medium or high strength into a separate **theme book**, measured apart from the stock-pick book. `trade.py` limits it: at most 2 positions per theme, at most $3,000 open in total, no ideas from episodes older than 7 days. Orders are placed automatically (`thematic.mode: paper`) and each is recorded in the daily report. Set `mode: shadow` to stop placing them.
+3. **Shadow account** (`shadow.py`): every theme idea, of any strength and age and regardless of the limits, is tracked as a hypothetical $500 purchase (entry at the next open after the episode, exit at its horizon) against SPY. The dashboard shows its hit rate and alpha overall, by idea strength, and for ideas that were vs were not actually traded, so you can see whether the idea logic and the limits add value. Prices come from Alpaca's daily bars (free IEX feed).
 
 ## Sources (`sources.yaml`)
 
