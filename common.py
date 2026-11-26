@@ -1,6 +1,6 @@
 """Shared helpers: config, SQLite, signal filter, market calendar, Alpaca access.
 
-    python common.py --is-trading-day   # exit 0 if today (ET) is a US trading day, else 1
+    python common.py --is-trading-day   # exit 0 if today (ET) is a US trading day, 3 if not; anything else is an error
 """
 from __future__ import annotations
 
@@ -178,16 +178,21 @@ def current_session(now: dt.datetime | None = None) -> dt.date:
 
 
 # ---------- Alpaca ----------
+def _env(name: str) -> str:
+    """Env var with surrounding whitespace removed (pasted secrets often carry a space or newline)."""
+    return (os.environ.get(name) or "").strip()
+
+
 def have_keys() -> bool:
-    return bool(os.environ.get("ALPACA_KEY") and os.environ.get("ALPACA_SECRET"))
+    return bool(_env("ALPACA_KEY") and _env("ALPACA_SECRET"))
 
 
 def trading_client():
     from alpaca.trading.client import TradingClient
-    base = os.environ.get("ALPACA_BASE_URL", PAPER_URL).rstrip("/")
+    base = (_env("ALPACA_BASE_URL") or PAPER_URL).rstrip("/")
     if base != PAPER_URL:
         raise SystemExit(f"Refusing to run: ALPACA_BASE_URL must be {PAPER_URL}.")
-    return TradingClient(os.environ["ALPACA_KEY"], os.environ["ALPACA_SECRET"], paper=True)
+    return TradingClient(_env("ALPACA_KEY"), _env("ALPACA_SECRET"), paper=True)
 
 
 def assert_paper(tc) -> None:
@@ -199,7 +204,7 @@ def assert_paper(tc) -> None:
 
 def data_client():
     from alpaca.data.historical import StockHistoricalDataClient
-    return StockHistoricalDataClient(os.environ["ALPACA_KEY"], os.environ["ALPACA_SECRET"])
+    return StockHistoricalDataClient(_env("ALPACA_KEY"), _env("ALPACA_SECRET"))
 
 
 def entry_coid(s) -> str:
@@ -324,5 +329,5 @@ if __name__ == "__main__":
         today = now_et().date()
         ok = is_trading_day(today)
         print(f"{today} is {'a' if ok else 'not a'} US trading day")
-        sys.exit(0 if ok else 1)
+        sys.exit(0 if ok else 3)
     print(__doc__)
