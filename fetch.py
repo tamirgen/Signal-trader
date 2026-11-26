@@ -299,7 +299,8 @@ def run(dry: bool) -> dict:
             ep["transcript_source"] = how
             if not text:
                 ep["status"] = f"skipped: {how}"
-                s_state.setdefault("seen", []).append(item["guid"])  # permanent: don't retry daily
+                if "is not set" not in how:  # a missing key is fixable, so keep retrying; other reasons are permanent
+                    s_state.setdefault("seen", []).append(item["guid"])
                 return ep
             ep["transcript_chars"] = len(text)
             if len(text) < st.get("min_transcript_chars", 0):
