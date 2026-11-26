@@ -60,7 +60,9 @@ def plan_entries(con, rules, tc) -> list[dict]:
     held = open_theme_positions(con)       # grows as theme buys are planned in this run
     for s in con.execute("""SELECT s.*, e.date AS ep_date, e.podcast, e.source FROM signals s
                             JOIN episodes e ON e.id = s.episode_id
-                            WHERE s.status = 'eligible' ORDER BY e.date, s.book, s.ticker""").fetchall():
+                            WHERE s.status = 'eligible'
+                            ORDER BY e.date, s.book,
+                                     CASE s.confidence WHEN 'high' THEN 0 WHEN 'medium' THEN 1 ELSE 2 END, s.ticker""").fetchall():
         is_theme = s["book"] == "theme"
         ep_date = dt.date.fromisoformat(s["ep_date"])
         intended = next_trading_day(ep_date)
