@@ -27,7 +27,7 @@ The job commits new signals, feed state and the activity log back to the repo, s
 ## Position sizing and double-down (`sizing:` in `rules.yaml`)
 
 - **At most $500 in any single stock or ETF.**
-- **Exception: with 2 or more independent sources backing the same ticker (3 is better), we double down to $1,000**, which is the ceiling. A source is a distinct show or event (repeat episodes of one show count once), counted within 14 days. When a second source backs a ticker we already hold, the system buys only the difference.
+- **Exception: with 2 or more independent sources backing the same ticker (3 is better), we double down to $1,000**, which is the ceiling. A source is a distinct show or event (repeat episodes of one show count once), all within 7 days of each other. When a second source backs a ticker we already hold, the system buys only the difference.
 - Every order's size, the sources behind it, and what was already held are written into the daily report.
 
 ## Paper account only
@@ -39,7 +39,10 @@ This project only ever trades Alpaca's **paper account** (simulated money). It c
 
 ## Test plan
 
-The system runs unattended for about one month (from 2026-11-27) as a test of the tool: how its stock calls, theme ideas and double-down rule perform against SPY. Holding periods are 20 / 60 / 180 trading days, so most positions will still be open at the end; results are measured against SPY from each entry (unrealized), not as closed trades.
+The system runs unattended for about one month (from 2026-11-27) as a test of the tool: how its stock calls, theme ideas and double-down rule perform against the S&P 500.
+
+- **Every position is held 60 trading days**, whatever horizon the speaker gave (`horizons:` in `rules.yaml`), so the whole portfolio is one clean test. Most positions will still be open after a month, so month-end results are unrealized, measured from each entry.
+- **Benchmark: the same dollars in the S&P 500.** For every entry, the same dollars are hypothetically put into SPY at the same fill time and sold when we sell. Six $500 buys on one day are compared with $3,000 of SPY bought that day. The dashboard shows both in dollars, the difference, and a line chart of cumulative profit and loss.
 
 ## Theme logic: from world events to stocks
 
@@ -104,8 +107,8 @@ python -m unittest discover -s tests -v
 - **One position per ticker per episode:** when one episode mentions the same ticker more than once, only the mention with the highest confidence is traded.
 - **Tickers:** normalized to Alpaca format (`brk-b`, `BRK/B` → `BRK.B`). A ticker is skipped if Alpaca says it isn't tradable or doesn't support dollar-amount orders.
 - **Entry:** a $1,000 notional market order (DAY) for the next market open after the episode date. A signal processed after that open is entered at the next session, and the dry run shows how many days late it is.
-- **Exit:** sold 20, 60 or 180 trading days after the entry fill (short, medium, long). Free-text horizons are mapped to these buckets by `horizon_keywords`.
-- **Benchmark:** a hypothetical $1,000 SPY purchase priced at the entry fill time, and sold at the exit fill time. It is recorded in the `benchmarks` table and never ordered.
+- **Exit:** sold 60 trading days after the entry fill for every position (the three horizon buckets in `rules.yaml` are all set to 60 for the one-month test; the original values were 20 / 60 / 180).
+- **Benchmark:** the same dollars as each entry, hypothetically put into SPY at the entry fill time and sold at the exit fill time. It is recorded in the `benchmarks` table and never ordered.
 - **Idempotent:** entry orders use `client_order_id = episode_id-TICKER`, exits use `…-exit`. Every order is looked up on Alpaca before it is submitted.
 
 ## Report

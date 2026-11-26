@@ -74,7 +74,8 @@ class SignalFilter(unittest.TestCase):
         self.assertEqual(horizon_bucket("two to three quarters", RULES), "medium")
         self.assertEqual(horizon_bucket("2027-2028", RULES), "long")
         self.assertEqual(horizon_bucket("unknown", RULES), "medium")
-        self.assertEqual(RULES["horizons"], {"short": 20, "medium": 60, "long": 180})
+        # one-month test: every bucket holds 60 trading days so the portfolio is one clean test vs the S&P
+        self.assertEqual(RULES["horizons"], {"short": 60, "medium": 60, "long": 60})
 
 
 class NextOpen(unittest.TestCase):

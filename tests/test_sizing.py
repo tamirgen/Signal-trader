@@ -84,6 +84,19 @@ class Planning(unittest.TestCase):
         plan = self.plan([call("a", "2026-10-01", "Show A"), call("b", "2026-11-20", "Show B")])
         self.assertEqual(self.buys(plan), [(500, 1)])  # no top-up: the 10-01 source is too old to corroborate
 
+    def test_sources_must_be_within_a_week(self):
+        within = self.plan([call("a", "2026-11-13", "Show A"), call("b", "2026-11-20", "Show B")])  # 7 days apart
+        self.assertEqual(self.buys(within), [(500, 1), (500, 2)])
+        self.setUp()
+        apart = self.plan([call("a", "2026-11-12", "Show A"), call("b", "2026-11-20", "Show B")])    # 8 days apart
+        self.assertEqual(self.buys(apart), [(500, 1)])
+
+    def test_all_three_sources_must_be_within_a_week_of_the_latest(self):
+        plan = self.plan([call("a", "2026-11-10", "Show A"), call("b", "2026-11-17", "Show B"),
+                          call("c", "2026-11-24", "Show C")], today="2026-11-25")
+        # A-B are 7 days apart and B-C are 7 days apart, but A-C are 14: C only corroborates with B
+        self.assertEqual(self.buys(plan), [(500, 1), (500, 2)])
+
     def test_both_books_share_one_cap(self):
         # one show names NVDA and the theme logic also picks it: still $500 in total, one order
         ep = call("a", "2026-11-20", "Show A", ideas=[idea(theme="semiconductors_ai_compute", picks=["NVDA"])])

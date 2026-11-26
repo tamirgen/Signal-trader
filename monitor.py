@@ -11,6 +11,8 @@ import html
 import json
 from collections import defaultdict
 
+from portfolio import chart_svg
+import portfolio
 from common import ROOT, REPORTS, connect_alpaca, db, latest_prices, load_rules, record_benchmarks
 
 
@@ -20,7 +22,7 @@ def build_rows(con, marks: dict[str, float]) -> list[dict]:
             """SELECT s.*, e.podcast, e.source, e.date AS ep_date,
                       en.filled_avg_price AS entry_px, en.filled_qty AS qty, en.filled_at AS entry_at, en.status AS entry_status,
                       ex.filled_avg_price AS exit_px, ex.filled_at AS exit_at, ex.status AS exit_status,
-                      b.entry_price AS spy_entry, b.exit_price AS spy_exit
+                      b.entry_price AS spy_entry, b.exit_price AS spy_exit, b.qty AS spy_qty
                FROM signals s JOIN episodes e ON e.id = s.episode_id
                LEFT JOIN orders en ON en.mention_id = s.mention_id AND en.role = 'entry'
                LEFT JOIN orders ex ON ex.mention_id = s.mention_id AND ex.role = 'exit'
@@ -40,6 +42,7 @@ def build_rows(con, marks: dict[str, float]) -> list[dict]:
                 r["ret"] = mark / s["entry_px"] - 1
                 r["pnl"] = s["qty"] * (mark - s["entry_px"])
             spy_mark = s["spy_exit"] if closed else marks.get("SPY")
+            r.update(spy_entry_px=s["spy_entry"], spy_qty=s["spy_qty"], spy_mark_px=spy_mark)
             if s["spy_entry"] and spy_mark:
                 r["spy_ret"] = spy_mark / s["spy_entry"] - 1
                 if "ret" in r:
@@ -196,6 +199,23 @@ def theme_ideas_html(con, mode: str, limit: int = 14) -> str:
             f'<th>Effect</th><th>Picks</th></tr></thead><tbody>{"".join(out)}</tbody></table></div>')
 
 
+def portfolio_html(summary, points) -> str:
+    if not summary:
+        return '<div class="card empty">Starts with the first fills. Every dollar we invest is matched with the same dollars in SPY.</div>'
+    sign = lambda v: "pos" if v > 0 else "neg" if v < 0 else ""  # noqa: E731
+    stats = "".join([
+        tile("Invested (our picks)", money(summary["invested"])),
+        tile("Our P&L", f"{money(summary['pnl'])} ({pct(summary['ret'])})", sign(summary["pnl"])),
+        tile("Same $ in the S&P 500", f"{money(summary['spy_pnl'])} ({pct(summary['spy_ret'])})", sign(summary["spy_pnl"])),
+        tile("Ahead of / behind S&P", f"{money(summary['diff'])} ({pct(summary['excess_ret'])})", sign(summary["diff"])),
+    ])
+    chart = chart_svg(points)
+    legend = ('<div class="legend"><span><i style="background:var(--accent)"></i>Our portfolio</span>'
+              '<span><i style="background:var(--mute)"></i>Same dollars in SPY</span> '
+              '<span class="mute">cumulative profit and loss, in dollars</span></div>') if chart else ""
+    return f'<div class="tiles">{stats}</div>' + (f'<div class="card chart">{legend}{chart}</div>' if chart else "")
+
+
 def shadow_html(shadow_data, enabled: bool) -> str:
     if not enabled:
         return ""
@@ -225,7 +245,8 @@ def sources_html(a: dict | None) -> str:
     return f'<div class="chips">{chips}</div>'
 
 
-def render(rows, board, n_skipped, has_keys, con=None, activity=None, shadow_data=None, shadow_on=False) -> str:
+def render(rows, board, n_skipped, has_keys, con=None, activity=None, shadow_data=None, shadow_on=False,
+           portfolio_data=None) -> str:
     measured = [r for r in rows if "ret" in r]
     alphas = [r["alpha"] for r in measured if "alpha" in r]
     pnl = sum(r.get("pnl", 0) for r in measured)
@@ -279,6 +300,9 @@ q {{ display:block; margin-top:4px; font-style:italic; }}
 .tag {{ display:inline-block; font-size:11px; font-weight:600; letter-spacing:.04em; padding:1px 7px; border-radius:6px; margin-right:8px; }}
 .tag.buy {{ background:var(--chip-ok); color:var(--pos); }} .tag.sell {{ background:var(--chip-bad); color:var(--neg); }}
 .tag.ep {{ background:var(--bg); color:var(--accent); border:1px solid var(--line); }} .tag.err {{ background:var(--chip-bad); color:var(--neg); }}
+.chart {{ padding:12px 16px; margin-top:12px; }} .axis {{ font-size:11px; fill:var(--mute); }}
+.legend {{ display:flex; gap:16px; flex-wrap:wrap; font-size:12px; margin-bottom:6px; }}
+.legend i {{ display:inline-block; width:14px; height:3px; margin-right:6px; vertical-align:middle; border-radius:2px; }}
 .chips-cell {{ white-space:normal; min-width:170px; }} .chips-cell .chip {{ display:inline-block; margin:0 6px 4px 0; }}
 .chips {{ display:flex; flex-wrap:wrap; gap:8px; margin-top:12px; }}
 .chip {{ font-size:12px; padding:4px 10px; border-radius:999px; border:1px solid var(--line); background:var(--card); }}
@@ -293,6 +317,7 @@ footer {{ font-size:12px; color:var(--mute); margin-top:32px; }}
 </style></head><body><main>
 <header><h1>Signal Trader</h1><span class="badge">Paper account · updated {esc(stamp)}</span></header>
 {warn}{sources_html(activity)}
+<h2>Portfolio vs the S&amp;P 500 · same dollars, same days</h2>{portfolio_html(*(portfolio_data or (None, [])))}
 <div class="tiles">{tiles}</div>
 <h2>Today {('· ' + today) if today else ''}</h2>{activity_html(activity)}
 <h2>Positions</h2>{table(rows, pos_cols)}
@@ -334,6 +359,20 @@ def main():
                "entry_px", "qty", "mark_px", "exit_date", "ret", "spy_ret", "alpha", "pnl", "hold_days"])
     write_csv(REPORTS / "leaderboard.csv", board,
               ["by", "name", "signals", "hit_rate", "avg_return", "avg_alpha", "pnl"])
+    portfolio_data = (portfolio.summary(rows), [])
+    if tc is not None and portfolio_data[0]:
+        try:
+            import shadow
+            lots_ = portfolio.lots(rows)
+            first = min(dt.date.fromisoformat(r["entry_date"]) for r in lots_)
+            syms = {r["ticker"] for r in lots_} | {rules["benchmark"]["symbol"]}
+            bars_ = shadow.fetch_bars(syms, first, dt.date.today(), rules["data_feed"])
+            portfolio_data = (portfolio_data[0], portfolio.series(rows, bars_, dt.date.today(), rules["benchmark"]["symbol"]))
+        except Exception as exc:
+            print(f"portfolio chart skipped: {type(exc).__name__}: {str(exc)[:200]}")
+        ps = portfolio_data[0]
+        print(f"  portfolio: invested ${ps['invested']:,.0f}, P&L ${ps['pnl']:+,.2f} ({ps['ret']:+.2%}); "
+              f"same $ in SPY ${ps['spy_pnl']:+,.2f} ({ps['spy_ret']:+.2%}); difference ${ps['diff']:+,.2f}")
     shadow_on = bool((rules.get("shadow") or {}).get("enabled"))
     shadow_data = None
     if shadow_on and tc is not None:
@@ -363,7 +402,7 @@ def main():
         activity = json.loads((REPORTS / "activity.json").read_text())
     except FileNotFoundError:
         activity = None
-    (REPORTS / "report.html").write_text(render(rows, board, n_skipped, tc is not None, con, activity, shadow_data, shadow_on))
+    (REPORTS / "report.html").write_text(render(rows, board, n_skipped, tc is not None, con, activity, shadow_data, shadow_on, portfolio_data))
     print(f"wrote {REPORTS / 'report.html'}, signals.csv, leaderboard.csv "
           f"({sum('ret' in r for r in rows)} signals with prices)")
 

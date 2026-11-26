@@ -305,21 +305,22 @@ def latest_prices(symbols, feed: str) -> dict[str, float]:
 
 
 def record_benchmarks(con, rules: dict) -> None:
-    """For every filled entry, record the hypothetical SPY buy at the entry fill time,
+    """For every filled entry, record a hypothetical SPY buy of the SAME DOLLARS at the entry fill time,
     and the matching SPY sale at the exit fill time once the position is closed."""
     b = rules["benchmark"]
     rows = con.execute(
-        """SELECT e.mention_id, e.filled_at AS entry_at, x.filled_at AS exit_at, bm.entry_price, bm.exit_price
+        """SELECT e.mention_id, e.filled_at AS entry_at, x.filled_at AS exit_at, bm.entry_price, bm.exit_price,
+                  COALESCE(e.filled_qty * e.filled_avg_price, e.notional) AS dollars
            FROM orders e LEFT JOIN orders x ON x.mention_id = e.mention_id AND x.role = 'exit' AND x.filled_at IS NOT NULL
            LEFT JOIN benchmarks bm ON bm.mention_id = e.mention_id
            WHERE e.role = 'entry' AND e.filled_at IS NOT NULL""").fetchall()
     for r in rows:
         if r["entry_price"] is None:
             px = price_at(b["symbol"], dt.datetime.fromisoformat(r["entry_at"]), rules["data_feed"])
-            if px:
+            if px and r["dollars"]:  # the same dollars we put into the stock, not a fixed amount
                 con.execute("""INSERT OR REPLACE INTO benchmarks (mention_id, symbol, notional, entry_at, entry_price, qty)
                                VALUES (?,?,?,?,?,?)""",
-                            (r["mention_id"], b["symbol"], b["notional_usd"], r["entry_at"], px, b["notional_usd"] / px))
+                            (r["mention_id"], b["symbol"], r["dollars"], r["entry_at"], px, r["dollars"] / px))
         if r["exit_at"] and r["exit_price"] is None:
             px = price_at(b["symbol"], dt.datetime.fromisoformat(r["exit_at"]), rules["data_feed"])
             if px:

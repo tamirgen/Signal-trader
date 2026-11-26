@@ -18,18 +18,21 @@ episode_exclusions:
 sizing:
   per_position_cap_usd: 1000         # hard ceiling per ticker, all trades combined
   by_sources: {1: 500, 2: 1000}      # 1 source -> $500; 2 or more sources -> $1,000
-  corroboration_window_days: 14      # sources must be within this many days of each other
+  corroboration_window_days: 7       # all corroborating sources must be within a week of each other
   min_order_usd: 50                  # ignore top-ups smaller than this
 
+# Benchmark: for every entry, the SAME DOLLARS go into SPY (hypothetically; never ordered) at the same fill
+# time, and are sold when we sell. So our portfolio is compared with e.g. "$3,000 of S&P bought the same day".
 benchmark:
-  symbol: SPY                        # hypothetical purchase recorded at each entry's fill time; never ordered
-  notional_usd: 1000
+  symbol: SPY
 
-# Holding period in trading days, by horizon bucket.
+# Holding period in trading days. For the one-month test every position is held 60 trading days,
+# whatever horizon the speaker gave, so the whole portfolio is one clean test against buying the S&P.
+# (The speaker's horizon is still recorded. Original values were short 20 / medium 60 / long 180.)
 horizons:
-  short: 20
+  short: 60
   medium: 60
-  long: 180
+  long: 60
 
 # Horizons in signals.json are free text ("near term", "2027", "two to three quarters").
 # An exact bucket name wins; otherwise the first bucket whose keyword appears is used,
