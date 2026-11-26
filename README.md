@@ -23,7 +23,7 @@ The job commits new signals, feed state and the activity log back to the repo, s
 
 Only episodes from the last `lookback_days` are considered, at most `max_episodes_per_source` per source per day. Videos with short transcripts (clips) are skipped. Spotify has no public transcript API, so it can't be used as a source.
 
-## Secrets and settings (Settings → Secrets and variables → Actions)
+## Secrets and settings (step-by-step instructions: [SETUP.md](SETUP.md))
 
 | Name | Kind | Needed for |
 |---|---|---|
