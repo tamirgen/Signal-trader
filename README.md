@@ -2,6 +2,18 @@
 
 Watches finance podcasts, YouTube channels and Fed press conferences for new episodes. Claude extracts the investing views from each transcript into `signals.json`, the qualifying ones become **Alpaca paper** trades, and each trade is compared with a hypothetical SPY purchase. Every day, a dashboard and a "what and why" activity report are published.
 
+## How to follow what's happening
+
+| I want to see… | Go to |
+|---|---|
+| **My actual investments** (positions, orders, balance; paper money) | https://app.alpaca.markets → switch to **Paper** (top left) → **Positions**, **Orders**, **Portfolio** |
+| **Performance vs SPY, leaderboard, recent signals** | Dashboard: https://tamirgen.github.io/signal-trader/ |
+| **What happened today and why** | `activity/` folder: one file per day, https://github.com/tamirgen/signal-trader/tree/main/activity |
+| **Did the daily job run, did anything fail** | https://github.com/tamirgen/signal-trader/actions |
+| **Every signal extracted so far** | `signals.json` |
+
+Nothing here is done by hand. Each morning GitHub runs the code in this repo (no person or AI chat is involved), and the code places the orders in your Alpaca paper account.
+
 ## Daily pipeline (`run_daily.sh`, run by GitHub Actions every morning)
 
 1. `fetch.py`: checks each source in `sources.yaml` and the `inbox/` folder for new episodes, gets the transcript, has Claude extract the signals, and appends them to `signals.json`.
