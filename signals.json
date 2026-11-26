@@ -178,7 +178,73 @@
     "theme": "Offshore compute"
    }
   ],
-  "id": "all-in-2026-11-07-midterms-ai-selloff"
+  "id": "all-in-2026-11-07-midterms-ai-selloff",
+  "theme_ideas": [
+   {
+    "theme": "cloud_software_ai_platforms",
+    "event": "New governors after the midterms may freeze state-level data center permits, squeezing new compute supply.",
+    "effect": "tailwind",
+    "strength": "medium",
+    "horizon": "long",
+    "causal_chain": "Permit freezes limit new data center supply -> existing capacity becomes scarce and more valuable -> hyperscalers that own capacity keep compute for their own products and gain pricing power over AI labs and neoclouds",
+    "invalidation": "New governors approve permits normally, or hyperscaler stocks keep falling alongside the AI infrastructure selloff as capex cuts hit their growth stories",
+    "picks": [
+     "QQQ",
+     "GOOGL"
+    ],
+    "speakers": "Sacks or Chamath (unclear)"
+   },
+   {
+    "theme": "semiconductors_ai_compute",
+    "event": "Data center permit fears wiped about $4T off AI stocks; fully permitted projects finish in 2027 but new approvals stall.",
+    "effect": "headwind",
+    "strength": "medium",
+    "horizon": "long",
+    "causal_chain": "Stalled permits -> data center construction pipeline shrinks sharply by 2028 -> lower future demand for GPUs, memory and equipment",
+    "invalidation": "Permits continue to be granted, or compute simply shifts offshore (Canada, Mexico, Asia) while chip orders hold up",
+    "picks": [],
+    "speakers": "Jason Calacanis, Chamath"
+   },
+   {
+    "theme": "power_datacenter_infrastructure",
+    "event": "State-level data center permit freezes threaten the pipeline of new data center builds in the US.",
+    "effect": "headwind",
+    "strength": "low",
+    "horizon": "long",
+    "causal_chain": "Fewer new data center approvals -> less incremental grid, cooling and power-generation demand -> weaker growth outlook for data center infrastructure suppliers",
+    "invalidation": "Permit policy stays permissive, or existing backlog and grid demand keep orders strong through 2028",
+    "picks": [],
+    "speakers": "Chamath, Jason Calacanis"
+   },
+   {
+    "theme": "airlines_transport",
+    "event": "A possible end to the Iran war could send Brent from about 110 down to 70; Brent already fell about 10% on election day on peace hopes.",
+    "effect": "tailwind",
+    "strength": "medium",
+    "horizon": "medium",
+    "causal_chain": "War ends -> Brent and diesel prices fall sharply -> fuel costs drop for airlines and freight carriers -> margin expansion",
+    "invalidation": "The war continues or escalates and Brent climbs back toward the ~117 peak",
+    "picks": [
+     "JETS",
+     "DAL"
+    ],
+    "speakers": "Sacks"
+   },
+   {
+    "theme": "rates_down_housing",
+    "event": "Inflation rose to 3.7% on war-driven energy costs, mortgages are near 7.5%, and a war end would let the Fed pivot from hikes to cuts.",
+    "effect": "tailwind",
+    "strength": "low",
+    "horizon": "medium",
+    "causal_chain": "War ends -> oil and gas fall -> inflation eases -> Fed cuts -> mortgage rates fall -> homebuilders and long bonds rally",
+    "invalidation": "The war persists, inflation stays near or above 3.7%, or the Fed keeps hiking",
+    "picks": [
+     "ITB",
+     "DHI"
+    ],
+    "speakers": "Sacks"
+   }
+  ]
  },
  {
   "catalysts": [],
@@ -274,7 +340,34 @@
     "theme": "Buybacks"
    }
   ],
-  "id": "berkshire-q3-2026-results"
+  "id": "berkshire-q3-2026-results",
+  "theme_ideas": [
+   {
+    "theme": "airlines_transport",
+    "event": "BNSF railroad earnings rose 19% in Q3 2026, pointing to firm US freight volumes and pricing.",
+    "effect": "tailwind",
+    "strength": "low",
+    "horizon": "medium",
+    "causal_chain": "Strong rail freight volumes -> healthy US goods and shipping demand -> better volumes for parcel and freight carriers",
+    "invalidation": "Weekly rail carloads or parcel volumes decline, or UPS/FDX guide freight demand lower next quarter.",
+    "picks": [
+     "JETS",
+     "UPS"
+    ],
+    "speakers": "Reuters/AP coverage of Berkshire results"
+   },
+   {
+    "theme": "broad_us_equities",
+    "event": "Berkshire's cash pile hit a record $377B because it sees few attractive deals at current prices, a sign US equity valuations are stretched.",
+    "effect": "headwind",
+    "strength": "low",
+    "horizon": "long",
+    "causal_chain": "Prominent value buyer finds little worth buying -> rich valuations limit forward returns -> greater downside risk for broad indices",
+    "invalidation": "Berkshire deploys large sums into acquisitions or equities, or earnings growth catches up to valuations.",
+    "picks": [],
+    "speakers": "Reuters/AP coverage of Berkshire results"
+   }
+  ]
  },
  {
   "catalysts": [
@@ -354,7 +447,48 @@
     "theme": "Balance-sheet policy"
    }
   ],
-  "id": "fomc-warsh-2026-10-28"
+  "id": "fomc-warsh-2026-10-28",
+  "theme_ideas": [
+   {
+    "theme": "banks_rates_up",
+    "event": "Fed holds at 3.75-4.00% with inflation too high and strong growth, flagging a December hike as a live risk.",
+    "effect": "tailwind",
+    "strength": "medium",
+    "horizon": "medium",
+    "causal_chain": "Hawkish Fed / hike risk -> higher-for-longer short rates and firm term premium -> better net interest margins plus strong credit conditions from >3% growth -> bank earnings",
+    "invalidation": "Fed signals cuts or December hike is taken off the table; yield curve inverts sharply; credit deterioration emerges.",
+    "picks": [
+     "XLF",
+     "JPM"
+    ],
+    "speakers": "Chair Warsh"
+   },
+   {
+    "theme": "rates_down_housing",
+    "event": "December rate hike risk and inflation concerns pressure long-duration bonds and rate-sensitive housing.",
+    "effect": "headwind",
+    "strength": "medium",
+    "horizon": "medium",
+    "causal_chain": "Inflation too high -> possible December hike -> higher long yields and mortgage rates -> pressure on TLT and homebuilders",
+    "invalidation": "Inflation data cools and the Fed pivots toward cuts, pulling long yields lower.",
+    "picks": [],
+    "speakers": "Chair Warsh"
+   },
+   {
+    "theme": "reshoring_infrastructure",
+    "event": "US growth is strong (Q3 GDP above 3%) with business capex broadening beyond AI.",
+    "effect": "tailwind",
+    "strength": "high",
+    "horizon": "medium",
+    "causal_chain": "Broadening capex beyond AI -> more industrial equipment, construction and rental demand -> stronger orders for industrials",
+    "invalidation": "Capex surveys and durable goods orders roll over, or rate hikes visibly choke off business investment.",
+    "picks": [
+     "XLI",
+     "CAT"
+    ],
+    "speakers": "Chair Warsh"
+   }
+  ]
  },
  {
   "catalysts": [
@@ -456,7 +590,45 @@
     "theme": "Hedging"
    }
   ],
-  "id": "mib-seth-klarman-2026-06-23"
+  "id": "mib-seth-klarman-2026-06-23",
+  "theme_ideas": [
+   {
+    "theme": "semiconductors_ai_compute",
+    "event": "Investors are crowding into AI-speculation stocks, leaving valuations stretched and the market highly concentrated.",
+    "effect": "headwind",
+    "strength": "medium",
+    "horizon": "medium",
+    "causal_chain": "Crowded AI positioning and stretched multiples -> any growth disappointment or supply of new AI shares triggers de-rating -> AI chip leaders fall hardest",
+    "invalidation": "AI chip earnings keep beating and multiples expand further while concentration rises without a pullback.",
+    "picks": [],
+    "speakers": "Seth Klarman"
+   },
+   {
+    "theme": "broad_us_equities",
+    "event": "A wave of mega IPOs (SpaceX, OpenAI, Anthropic) is set to add a large supply of new shares to the market.",
+    "effect": "headwind",
+    "strength": "medium",
+    "horizon": "medium",
+    "causal_chain": "Mega IPOs add new equity supply -> investors sell existing holdings to fund allocations -> pressure on index-heavy, concentrated large caps",
+    "invalidation": "IPOs are delayed or absorbed easily, with broad indices rising through the issuance window.",
+    "picks": [],
+    "speakers": "Seth Klarman"
+   },
+   {
+    "theme": "defensive_staples_healthcare",
+    "event": "Stretched, concentrated markets raise downside risk, prompting cautious investors to hedge and rotate toward stable earners.",
+    "effect": "tailwind",
+    "strength": "low",
+    "horizon": "medium",
+    "causal_chain": "Concentration and valuation risk -> correction in AI/index leaders -> money rotates into defensive, stable-earnings sectors",
+    "invalidation": "Risk-on rally broadens and defensives underperform the S&P 500 over the next quarter.",
+    "picks": [
+     "XLP",
+     "PG"
+    ],
+    "speakers": "Seth Klarman"
+   }
+  ]
  },
  {
   "catalysts": [
@@ -571,7 +743,59 @@
     "theme": "Gross margin 71-72% in Q4, 72-73% after"
    }
   ],
-  "id": "nvidia-q3-fy27-earnings-2026-11-17"
+  "id": "nvidia-q3-fy27-earnings-2026-11-17",
+  "theme_ideas": [
+   {
+    "theme": "semiconductors_ai_compute",
+    "event": "AI data center build-out is accelerating: Nvidia guided FY28 growth to ~75%, Vera Rubin is ramping to ~$20B in its first quarter, GPU rental prices are rising and the cloud backlog is cited at $2.5T.",
+    "effect": "tailwind",
+    "strength": "high",
+    "horizon": "medium",
+    "causal_chain": "Hyperscaler and neocloud AI capex keeps rising -> next-gen Rubin ramp pulls through foundry, memory and packaging demand -> revenue and margin upside across the AI chip supply chain",
+    "invalidation": "Hyperscalers cut capex guidance, GPU rental prices fall, or the Rubin ramp slips materially.",
+    "picks": [
+     "SMH",
+     "TSM"
+    ],
+    "speakers": "Nvidia management"
+   },
+   {
+    "theme": "power_datacenter_infrastructure",
+    "event": "Record AI accelerator shipments and a $2.5T cloud backlog imply large new data center capacity coming online over the next year.",
+    "effect": "tailwind",
+    "strength": "medium",
+    "horizon": "long",
+    "causal_chain": "More GPU racks deployed -> higher power density and cooling needs per facility -> orders for power, cooling and grid equipment and data center capacity",
+    "invalidation": "Data center construction delays, power-equipment order slowdowns, or AI capex cuts.",
+    "picks": [
+     "GRID",
+     "VRT"
+    ],
+    "speakers": "Nvidia management"
+   },
+   {
+    "theme": "semiconductors_ai_compute",
+    "event": "Nvidia is shipping no Hopper chips to China, and new US export controls are under study.",
+    "effect": "headwind",
+    "strength": "high",
+    "horizon": "medium",
+    "causal_chain": "Tighter export controls -> China data center revenue lost for US chip and equipment vendors -> earnings risk and multiple pressure on China-exposed semis",
+    "invalidation": "The export-control review ends with relaxed rules or licensed China shipments resume.",
+    "picks": [],
+    "speakers": "Nvidia management"
+   },
+   {
+    "theme": "semiconductors_ai_compute",
+    "event": "Nvidia has $32B of neocloud commitments plus $118B of guarantees that depend on the neoclouds' own financing.",
+    "effect": "headwind",
+    "strength": "medium",
+    "horizon": "medium",
+    "causal_chain": "Credit tightening hits leveraged neoclouds -> GPU orders get cancelled or guarantees are called -> AI compute demand and chip supplier earnings are questioned",
+    "invalidation": "Neocloud debt markets stay open and the guarantees expire without losses.",
+    "picks": [],
+    "speakers": "Nvidia management"
+   }
+  ]
  },
  {
   "catalysts": [],
@@ -1486,6 +1710,50 @@
     "quote": "It's a rough week for tech.",
     "timestamp": ""
    }
+  ],
+  "theme_ideas": [
+   {
+    "theme": "cybersecurity",
+    "event": "AI-driven explosion in discovered vulnerabilities (17,000 CVEs in 2026, up 300% YoY) and open AI attack frameworks that can compromise firms in under three hours.",
+    "effect": "tailwind",
+    "strength": "high",
+    "horizon": "medium",
+    "causal_chain": "AI democratizes offensive hacking -> breach risk and patch urgency rise -> enterprises boost spend on AI-native endpoint, identity and cloud security",
+    "invalidation": "Cyber budgets flat or cut in upcoming earnings/guidance; no notable rise in AI-enabled breaches; security vendors report slowing net new ARR",
+    "picks": [
+     "CIBR",
+     "CRWD"
+    ],
+    "speakers": "George Kurtz"
+   },
+   {
+    "theme": "cybersecurity",
+    "event": "Identity-based attacks such as session token theft and North Korean fake IT workers are increasing.",
+    "effect": "tailwind",
+    "strength": "medium",
+    "horizon": "medium",
+    "causal_chain": "Identity attacks bypass traditional defenses -> demand for identity/zero-trust authentication grows -> zero-trust and identity security vendors gain",
+    "invalidation": "Identity security segment growth decelerates; enterprises deprioritize zero-trust projects",
+    "picks": [
+     "HACK",
+     "ZS"
+    ],
+    "speakers": "George Kurtz"
+   },
+   {
+    "theme": "cloud_software_ai_platforms",
+    "event": "Enterprises are shifting AI inference to local, open-weight models for data sovereignty and cost, benefiting high-memory local hardware like Apple's Mac Studio.",
+    "effect": "tailwind",
+    "strength": "medium",
+    "horizon": "long",
+    "causal_chain": "Enterprises want AI sovereignty and lower token costs -> run open-weight models on local high-memory machines -> Apple sells more Mac Studios and pro hardware",
+    "invalidation": "Mac revenue growth stalls; enterprises stay with cloud APIs from frontier labs; Apple fails to push local AI offerings",
+    "picks": [
+     "QQQ",
+     "AAPL"
+    ],
+    "speakers": "George Kurtz, Jason Calacanis"
+   }
   ]
  },
  {
@@ -1608,6 +1876,7 @@
     "quote": "there have been huge, huge swaths of the economy that have been completely disrupted by the big players in technology.",
     "timestamp": ""
    }
-  ]
+  ],
+  "theme_ideas": []
  }
 ]
