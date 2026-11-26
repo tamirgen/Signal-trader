@@ -50,6 +50,14 @@ def http_get(url: str, timeout: int = 60) -> bytes:
 
 
 # ---------- helpers ----------
+def short(exc: Exception) -> str:
+    """One-line error for reports (some libraries raise multi-paragraph messages)."""
+    lines = [ln.strip() for ln in str(exc).splitlines() if ln.strip()]
+    msg = lines[0] if lines else ""
+    if "blocking requests from your IP" in str(exc):
+        msg = "YouTube blocked the request (cloud IP); set YOUTUBE_PROXY_URL or use the podcast feed"
+    return f"{type(exc).__name__}: {msg}"[:240]
+
 def slug(s: str) -> str:
     return re.sub(r"[^a-z0-9]+", "-", s.lower()).strip("-")[:40]
 
@@ -315,8 +323,8 @@ def run(dry: bool) -> dict:
             s_state.setdefault("seen", []).append(item["guid"])
             ep.update(status="extracted", id=e["id"], mentions=len(data["mentions"]))
         except Exception as exc:  # transient: leave unseen so tomorrow retries
-            ep["status"] = f"error: {exc}"
-            log["errors"].append(f"{podcast} / {item['title']}: {exc}")
+            ep["status"] = f"error: {short(exc)}"
+            log["errors"].append(f"{podcast} / {item['title']}: {short(exc)}")
             traceback.print_exc()
         return ep
 
@@ -366,8 +374,8 @@ def run(dry: bool) -> dict:
                 if not ep["status"].startswith("skipped: too short"):
                     log["episodes"].append(ep)
         except Exception as exc:
-            entry["status"] = f"error: {exc}"
-            log["errors"].append(f"{src['name']}: {exc}")
+            entry["status"] = f"error: {short(exc)}"
+            log["errors"].append(f"{src['name']}: {short(exc)}")
             traceback.print_exc()
         s_state["seen"] = s_state.get("seen", [])[-300:]
         log["sources"].append(entry)

@@ -17,12 +17,14 @@ settings:
   max_transcript_chars: 600000
 
 sources:
+  # YouTube blocks caption requests from GitHub's servers, so All-In comes from its podcast feed.
+  # To use the channel instead (needs YOUTUBE_PROXY_URL): type: youtube, handle: "@allin", match: [All-In]
   - name: All-In
-    type: youtube
+    type: podcast
     source: YouTube finance shows
-    handle: "@allin"
-    match: [All-In]
-    channel_id: ""
+    search: "All-In with Chamath, Jason, Sacks & Friedberg"
+    match: [Chamath, Sacks]
+    feed_url: ""
 
   - name: Table Four
     type: podcast

@@ -39,7 +39,7 @@ jobs:
         run: |
           git config user.name "signal-trader-bot"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add signals.json state activity inbox 2>/dev/null || true
+          for p in signals.json state activity inbox; do [ -e "$p" ] && git add -A "$p"; done
           if ! git diff --cached --quiet; then
             git commit -m "Daily update $(TZ=America/New_York date +%F)"
             git pull --rebase origin main && git push origin HEAD:main
