@@ -1,0 +1,1343 @@
+[
+ {
+  "catalysts": [
+   {
+    "date": "within 90 days",
+    "event": "SpaceX or Anthropic exercises the 90-day exit on their compute deal",
+    "related_assets": "SpaceX, Anthropic"
+   },
+   {
+    "date": "2027",
+    "event": "New governors take office and set data center permit policy",
+    "related_assets": "hyperscalers, neoclouds, AI labs"
+   },
+   {
+    "date": "unknown",
+    "event": "Iran war ends",
+    "related_assets": "Brent crude, rates, mortgages"
+   },
+   {
+    "date": "2026-2027",
+    "event": "Anthropic and OpenAI IPOs",
+    "related_assets": "AI labs"
+   }
+  ],
+  "date": "2026-11-07",
+  "mentions": [
+   {
+    "asset": "AI and data center stocks (Nvidia, Tesla, AMD, Micron, SpaceX)",
+    "catalyst_date": "",
+    "claim_type": "reported_fact",
+    "confidence": "medium",
+    "horizon": "near term",
+    "kind": "sector",
+    "quote": "",
+    "reasoning": "About $4T of market cap wiped out in one day, the worst single day by dollars, on data center permit fears.",
+    "sentiment": "bearish",
+    "speaker": "Jason Calacanis",
+    "ticker_inferred": "NVDA, TSLA, AMD, MU",
+    "ticker_stated": "",
+    "timestamp": "0:53:13"
+   },
+   {
+    "asset": "Hyperscalers (Amazon, Meta, Microsoft, Google, SpaceX)",
+    "catalyst_date": "",
+    "claim_type": "opinion",
+    "confidence": "medium",
+    "horizon": "2027-2028",
+    "kind": "sector",
+    "quote": "",
+    "reasoning": "A permit slowdown favors companies that already own capacity and can keep new compute for their own products.",
+    "sentiment": "bullish",
+    "speaker": "unclear (Sacks or Chamath)",
+    "ticker_inferred": "AMZN, META, MSFT, GOOGL",
+    "ticker_stated": "",
+    "timestamp": "0:56:00"
+   },
+   {
+    "asset": "Neoclouds",
+    "catalyst_date": "",
+    "claim_type": "opinion",
+    "confidence": "medium",
+    "horizon": "2027-2028",
+    "kind": "sector",
+    "quote": "",
+    "reasoning": "They rent capacity and carry heavy debt, so a supply squeeze could threaten them. Google reportedly took over a Crusoe data center.",
+    "sentiment": "bearish",
+    "speaker": "unclear (Sacks or Chamath)",
+    "ticker_inferred": "CRWV, NBIS",
+    "ticker_stated": "",
+    "timestamp": "0:58:00"
+   },
+   {
+    "asset": "Anthropic and OpenAI (IPO prospects)",
+    "catalyst_date": "",
+    "claim_type": "reported_fact",
+    "confidence": "medium",
+    "horizon": "2026-2027",
+    "kind": "other",
+    "quote": "",
+    "reasoning": "The selloff puts a cloud over the Anthropic IPO. Polymarket odds of an OpenAI IPO this year fell from 95% to 71%. Valuation could land near $1T rather than $1.5T to 2T.",
+    "sentiment": "bearish",
+    "speaker": "Jason Calacanis",
+    "ticker_inferred": "",
+    "ticker_stated": "",
+    "timestamp": "0:54:00"
+   },
+   {
+    "asset": "SpaceX",
+    "catalyst_date": "",
+    "claim_type": "opinion",
+    "confidence": "high",
+    "horizon": "unknown",
+    "kind": "stock",
+    "quote": "",
+    "reasoning": "Calls it severely undervalued and says he has been buying SpaceX and Tesla through the selloff. This is a host's personal position.",
+    "sentiment": "bullish",
+    "speaker": "Jason Calacanis",
+    "ticker_inferred": "",
+    "ticker_stated": "",
+    "timestamp": "1:19:00"
+   },
+   {
+    "asset": "SpaceX-Anthropic compute contract",
+    "catalyst_date": "90-day termination clause",
+    "claim_type": "prediction",
+    "confidence": "medium",
+    "horizon": "90 days",
+    "kind": "other",
+    "quote": "",
+    "reasoning": "A mutual 90-day exit clause lets SpaceX reprice Anthropic's compute at spot, possibly 2x to 3x current revenue, if compute gets scarce.",
+    "sentiment": "mixed",
+    "speaker": "unclear (Sacks or Chamath)",
+    "ticker_inferred": "",
+    "ticker_stated": "",
+    "timestamp": "0:59:23"
+   },
+   {
+    "asset": "Brent crude",
+    "catalyst_date": "end of Iran war",
+    "claim_type": "prediction",
+    "confidence": "medium",
+    "horizon": "conditional on the war ending",
+    "kind": "commodity",
+    "quote": "",
+    "reasoning": "Brent fell about 10% on election day on hopes the war ends. He says it goes from about 110 to 70 if it does, after a peak near 117.",
+    "sentiment": "bearish",
+    "speaker": "Sacks",
+    "ticker_inferred": "BZ=F, USO",
+    "ticker_stated": "",
+    "timestamp": "0:35:50"
+   },
+   {
+    "asset": "US rates and mortgages",
+    "catalyst_date": "",
+    "claim_type": "reported_fact",
+    "confidence": "medium",
+    "horizon": "2027",
+    "kind": "other",
+    "quote": "",
+    "reasoning": "Inflation rose from 2.4% to 3.7%, a rate hike replaced expected cuts, and mortgages are near 7.5%. A war end would let the Fed cut.",
+    "sentiment": "mixed",
+    "speaker": "Sacks",
+    "ticker_inferred": "",
+    "ticker_stated": "",
+    "timestamp": "0:06:00"
+   },
+   {
+    "asset": "Data center capex",
+    "catalyst_date": "2028",
+    "claim_type": "prediction",
+    "confidence": "medium",
+    "horizon": "2028",
+    "kind": "sector",
+    "quote": "",
+    "reasoning": "Fully permitted projects finish in 2027, but new approvals stall, so the pipeline shrinks sharply by 2028.",
+    "sentiment": "bearish",
+    "speaker": "Chamath",
+    "ticker_inferred": "",
+    "ticker_stated": "",
+    "timestamp": "1:22:53"
+   }
+  ],
+  "podcast": "All-In",
+  "savedAt": 1795651200000,
+  "source": "YouTube finance shows",
+  "summary": "After the midterms, the hosts link a roughly $4T AI and data center selloff to fears of new state-level data center permit freezes. Their view: hyperscalers with existing capacity gain, neoclouds and AI labs that rent compute lose, and oil falls sharply if the Iran war ends.",
+  "themes": [
+   {
+    "market_impact": "New governors may freeze permits, squeezing compute supply and repricing AI infrastructure.",
+    "theme": "Data center backlash"
+   },
+   {
+    "market_impact": "Oil, gas and diesel drive inflation, rate expectations and mortgage costs. A war end is the main upside trigger.",
+    "theme": "Iran war and inflation"
+   },
+   {
+    "market_impact": "Jason predicts data centers and models shift to Canada, Mexico and Asia, and to local models on desktops.",
+    "theme": "Offshore compute"
+   }
+  ],
+  "id": "all-in-2026-11-07-midterms-ai-selloff"
+ },
+ {
+  "catalysts": [],
+  "date": "2026-11-01",
+  "mentions": [
+   {
+    "asset": "Berkshire Hathaway",
+    "catalyst_date": "",
+    "claim_type": "reported_fact",
+    "confidence": "medium",
+    "horizon": "medium",
+    "kind": "stock",
+    "quote": "",
+    "reasoning": "Large buybacks signal management sees shares below intrinsic value; huge cash cushion.",
+    "sentiment": "bullish",
+    "speaker": "Company",
+    "ticker_inferred": "",
+    "ticker_stated": "BRK.B",
+    "timestamp": ""
+   },
+   {
+    "asset": "Geico",
+    "catalyst_date": "",
+    "claim_type": "reported_fact",
+    "confidence": "medium",
+    "horizon": "short",
+    "kind": "business",
+    "quote": "",
+    "reasoning": "Weak underwriting results in the quarter.",
+    "sentiment": "bearish",
+    "speaker": "Company",
+    "ticker_inferred": "BRK.B",
+    "ticker_stated": "",
+    "timestamp": ""
+   },
+   {
+    "asset": "BNSF",
+    "catalyst_date": "",
+    "claim_type": "reported_fact",
+    "confidence": "medium",
+    "horizon": "short",
+    "kind": "business",
+    "quote": "",
+    "reasoning": "Earnings up 19%.",
+    "sentiment": "bullish",
+    "speaker": "Company",
+    "ticker_inferred": "BRK.B",
+    "ticker_stated": "",
+    "timestamp": ""
+   },
+   {
+    "asset": "Alphabet",
+    "catalyst_date": "",
+    "claim_type": "reported_fact",
+    "confidence": "low",
+    "horizon": "long",
+    "kind": "stock",
+    "quote": "",
+    "reasoning": "Berkshire holds an Alphabet stake.",
+    "sentiment": "bullish",
+    "speaker": "Company",
+    "ticker_inferred": "",
+    "ticker_stated": "GOOGL",
+    "timestamp": ""
+   },
+   {
+    "asset": "Taylor Morrison",
+    "catalyst_date": "",
+    "claim_type": "reported_fact",
+    "confidence": "low",
+    "horizon": "long",
+    "kind": "stock",
+    "quote": "",
+    "reasoning": "Berkshire made a purchase of the homebuilder.",
+    "sentiment": "bullish",
+    "speaker": "Company",
+    "ticker_inferred": "",
+    "ticker_stated": "TMHC",
+    "timestamp": ""
+   }
+  ],
+  "podcast": "Berkshire Hathaway Q3 2026 results",
+  "savedAt": 1795690300000,
+  "source": "Filings and investor letters",
+  "summary": "Operating profit fell 6% to $12.71B. Berkshire bought back $9.6B in Q3 plus about $2B in October while cash reached $377.4B (about $357B after pending T-bill purchases). Geico weak; BNSF +19%, Precision Castparts +30%. Built from Reuters/AP coverage, not the filing itself.",
+  "themes": [
+   {
+    "market_impact": "Berkshire sees few attractive deals at current prices",
+    "theme": "Cash hoarding at record levels"
+   },
+   {
+    "market_impact": "Supports BRK.B share price",
+    "theme": "Buybacks"
+   }
+  ],
+  "id": "berkshire-q3-2026-results"
+ },
+ {
+  "catalysts": [
+   {
+    "date": "2026-12",
+    "event": "December FOMC meeting",
+    "related_assets": [
+     "TLT",
+     "SPY"
+    ]
+   },
+   {
+    "date": "2027 Q1",
+    "event": "Balance-sheet task force report",
+    "related_assets": []
+   }
+  ],
+  "date": "2026-10-28",
+  "mentions": [
+   {
+    "asset": "Long-duration bonds",
+    "catalyst_date": "2026-12",
+    "claim_type": "opinion",
+    "confidence": "medium",
+    "horizon": "short",
+    "kind": "asset class",
+    "quote": "",
+    "reasoning": "Inflation too high, hike risk in December.",
+    "sentiment": "bearish",
+    "speaker": "Chair Warsh",
+    "ticker_inferred": "TLT",
+    "ticker_stated": "",
+    "timestamp": ""
+   },
+   {
+    "asset": "US equities (rate-sensitive)",
+    "catalyst_date": "2026-12",
+    "claim_type": "opinion",
+    "confidence": "low",
+    "horizon": "short",
+    "kind": "asset class",
+    "quote": "",
+    "reasoning": "Higher-for-longer or hikes pressure multiples.",
+    "sentiment": "bearish",
+    "speaker": "Chair Warsh",
+    "ticker_inferred": "SPY",
+    "ticker_stated": "",
+    "timestamp": ""
+   },
+   {
+    "asset": "US economic growth / capex",
+    "catalyst_date": "",
+    "claim_type": "reported_fact",
+    "confidence": "high",
+    "horizon": "medium",
+    "kind": "macro",
+    "quote": "",
+    "reasoning": "H1 GDP 2.4%, Q3 above 3%, capex broadening beyond AI.",
+    "sentiment": "bullish",
+    "speaker": "Chair Warsh",
+    "ticker_inferred": "",
+    "ticker_stated": "",
+    "timestamp": ""
+   }
+  ],
+  "podcast": "FOMC press conference",
+  "savedAt": 1795690200000,
+  "source": "Fed and FOMC",
+  "summary": "Fed held at 3.75-4.00%, said inflation is too high and growth is strong (H1 GDP 2.4%, Q3 above 3%) with capex broadening. A December hike is a live risk; balance-sheet task force due early Q1 2027.",
+  "themes": [
+   {
+    "market_impact": "Pressure on bonds and growth multiples",
+    "theme": "Rate hike risk"
+   },
+   {
+    "market_impact": "Task force report early Q1 2027 could move term premium",
+    "theme": "Balance-sheet policy"
+   }
+  ],
+  "id": "fomc-warsh-2026-10-28"
+ },
+ {
+  "catalysts": [
+   {
+    "date": "",
+    "event": "SpaceX / OpenAI / Anthropic IPO supply",
+    "related_assets": []
+   }
+  ],
+  "date": "2026-06-23",
+  "mentions": [
+   {
+    "asset": "AI-speculation stocks",
+    "catalyst_date": "",
+    "claim_type": "opinion",
+    "confidence": "medium",
+    "horizon": "medium",
+    "kind": "theme",
+    "quote": "",
+    "reasoning": "Crowded, concentrated market; valuations stretched.",
+    "sentiment": "bearish",
+    "speaker": "Seth Klarman",
+    "ticker_inferred": "",
+    "ticker_stated": "",
+    "timestamp": ""
+   },
+   {
+    "asset": "Mega IPOs (SpaceX, OpenAI, Anthropic)",
+    "catalyst_date": "",
+    "claim_type": "opinion",
+    "confidence": "medium",
+    "horizon": "short",
+    "kind": "theme",
+    "quote": "",
+    "reasoning": "Large supply of new shares could absorb demand and pressure the market.",
+    "sentiment": "bearish",
+    "speaker": "Seth Klarman",
+    "ticker_inferred": "",
+    "ticker_stated": "",
+    "timestamp": ""
+   },
+   {
+    "asset": "Assisted-living real estate",
+    "catalyst_date": "",
+    "claim_type": "opinion",
+    "confidence": "medium",
+    "horizon": "long",
+    "kind": "sector",
+    "quote": "",
+    "reasoning": "Demographic demand and out-of-favor valuations.",
+    "sentiment": "bullish",
+    "speaker": "Seth Klarman",
+    "ticker_inferred": "",
+    "ticker_stated": "",
+    "timestamp": ""
+   },
+   {
+    "asset": "Private energy and midstream",
+    "catalyst_date": "",
+    "claim_type": "opinion",
+    "confidence": "medium",
+    "horizon": "long",
+    "kind": "sector",
+    "quote": "",
+    "reasoning": "Attractive private-market value versus public valuations.",
+    "sentiment": "bullish",
+    "speaker": "Seth Klarman",
+    "ticker_inferred": "",
+    "ticker_stated": "",
+    "timestamp": ""
+   },
+   {
+    "asset": "Large-cap 'AI losers'",
+    "catalyst_date": "",
+    "claim_type": "opinion",
+    "confidence": "low",
+    "horizon": "long",
+    "kind": "theme",
+    "quote": "",
+    "reasoning": "Selective opportunities where AI disruption fear is overdone.",
+    "sentiment": "bullish",
+    "speaker": "Seth Klarman",
+    "ticker_inferred": "",
+    "ticker_stated": "",
+    "timestamp": ""
+   }
+  ],
+  "podcast": "Masters in Business: Seth Klarman",
+  "savedAt": 1795690100000,
+  "source": "Masters in Business",
+  "summary": "Klarman sees markets stretched and concentrated, warns of crowding into AI speculation and heavy IPO supply (SpaceX, OpenAI, Anthropic). He favors assisted-living real estate, private energy/midstream and selected large-cap 'AI losers', and holds macro hedges.",
+  "themes": [
+   {
+    "market_impact": "Higher downside risk to index-heavy portfolios",
+    "theme": "Market concentration and stretched valuations"
+   },
+   {
+    "market_impact": "Klarman keeps macro hedges, signaling caution",
+    "theme": "Hedging"
+   }
+  ],
+  "id": "mib-seth-klarman-2026-06-23"
+ },
+ {
+  "catalysts": [
+   {
+    "date": "2027 Q1",
+    "event": "Vera Rubin first-quarter ramp",
+    "related_assets": [
+     "NVDA"
+    ]
+   },
+   {
+    "date": "",
+    "event": "China export-control decision",
+    "related_assets": [
+     "NVDA"
+    ]
+   }
+  ],
+  "date": "2026-11-17",
+  "mentions": [
+   {
+    "asset": "NVIDIA",
+    "catalyst_date": "",
+    "claim_type": "reported_fact",
+    "confidence": "high",
+    "horizon": "medium",
+    "kind": "stock",
+    "quote": "",
+    "reasoning": "Revenue +103%, Q4 guide $130B, FY28 growth guide raised to ~75% from 70%, $227B buyback remaining.",
+    "sentiment": "bullish",
+    "speaker": "Management",
+    "ticker_inferred": "",
+    "ticker_stated": "NVDA",
+    "timestamp": ""
+   },
+   {
+    "asset": "Vera Rubin platform",
+    "catalyst_date": "",
+    "claim_type": "prediction",
+    "confidence": "medium",
+    "horizon": "short",
+    "kind": "product",
+    "quote": "",
+    "reasoning": "Expected ~$20B revenue in its first quarter; cloud backlog $2.5T.",
+    "sentiment": "bullish",
+    "speaker": "Management",
+    "ticker_inferred": "",
+    "ticker_stated": "NVDA",
+    "timestamp": ""
+   },
+   {
+    "asset": "Neocloud financing exposure",
+    "catalyst_date": "",
+    "claim_type": "reported_fact",
+    "confidence": "medium",
+    "horizon": "medium",
+    "kind": "risk",
+    "quote": "",
+    "reasoning": "$32B commitments and $118B guarantees conditional on the neoclouds' own financing; credit-sensitive.",
+    "sentiment": "bearish",
+    "speaker": "Management",
+    "ticker_inferred": "NVDA",
+    "ticker_stated": "",
+    "timestamp": ""
+   },
+   {
+    "asset": "China data-center sales",
+    "catalyst_date": "",
+    "claim_type": "reported_fact",
+    "confidence": "high",
+    "horizon": "medium",
+    "kind": "risk",
+    "quote": "",
+    "reasoning": "No Hopper shipments to China; new export controls under study.",
+    "sentiment": "bearish",
+    "speaker": "Management",
+    "ticker_inferred": "NVDA",
+    "ticker_stated": "",
+    "timestamp": ""
+   },
+   {
+    "asset": "Anthropic",
+    "catalyst_date": "",
+    "claim_type": "reported_fact",
+    "confidence": "low",
+    "horizon": "medium",
+    "kind": "private company",
+    "quote": "",
+    "reasoning": "Annualized revenue cited at $81B, evidence of AI demand.",
+    "sentiment": "bullish",
+    "speaker": "Management",
+    "ticker_inferred": "",
+    "ticker_stated": "",
+    "timestamp": ""
+   }
+  ],
+  "podcast": "NVIDIA Q3 FY27 earnings call",
+  "savedAt": 1795690000000,
+  "source": "Earnings calls",
+  "summary": "Nvidia posted $115.8B revenue (+103%), guided Q4 to $130B \u00b13% (extra week) and FY28 growth to ~75%. Vera Rubin ramps to ~$20B in its first quarter. Offsetting: Huang resigned and the board won't reinstate him, $32B neocloud commitments plus $118B conditional guarantees, and no China Hopper shipments with new export controls under study.",
+  "themes": [
+   {
+    "market_impact": "Supports compute demand and pricing power for AI infrastructure",
+    "theme": "GPU rental prices rising"
+   },
+   {
+    "market_impact": "CEO resignation adds governance uncertainty despite strong numbers",
+    "theme": "Leadership transition"
+   },
+   {
+    "market_impact": "Margins stable to slightly higher",
+    "theme": "Gross margin 71-72% in Q4, 72-73% after"
+   }
+  ],
+  "id": "nvidia-q3-fy27-earnings-2026-11-17"
+ },
+ {
+  "catalysts": [],
+  "date": "2026-11-20",
+  "mentions": [
+   {
+    "asset": "TIPS (30-year)",
+    "catalyst_date": "",
+    "claim_type": "opinion",
+    "confidence": "medium",
+    "horizon": "long-term",
+    "kind": "other",
+    "quote": "you can nearly lock in a 3.5% real yield on a 30-year U.S. Treasury.",
+    "reasoning": "He says real yields near 3.5% on the 30-year and high-2% on the 10-year are near all-time highs for the 30-year TIPS and are very attractive for people needing inflation-adjusted returns.",
+    "sentiment": "bullish",
+    "speaker": "David Eichhorn",
+    "ticker_inferred": "TIP",
+    "ticker_stated": "",
+    "timestamp": "43:48"
+   },
+   {
+    "asset": "Private credit (BDCs, interval funds, levered vehicles)",
+    "catalyst_date": "",
+    "claim_type": "opinion",
+    "confidence": "high",
+    "horizon": "unknown",
+    "kind": "other",
+    "quote": "the high fees private credit managers charge take what is, in its native state, a very nice risk premium and destroy all of it",
+    "reasoning": "Underlying loans carry an illiquidity premium, but vehicle leverage at about SOFR+200 and high fees destroy it, and liquid high-yield plus CDS has outperformed publicly traded BDCs over 20 years.",
+    "sentiment": "bearish",
+    "speaker": "David Eichhorn",
+    "ticker_inferred": "BIZD",
+    "ticker_stated": "",
+    "timestamp": "53:00"
+   },
+   {
+    "asset": "Private credit in 401(k)s and semi-liquid interval funds",
+    "catalyst_date": "",
+    "claim_type": "prediction",
+    "confidence": "medium",
+    "horizon": "unknown",
+    "kind": "other",
+    "quote": "when the pain comes \u2014 which it invariably does in every asset class \u2014 and folks want to redeem, we're going to see some ugly situations",
+    "reasoning": "He expects ugly redemption situations when pain arrives, because investors do not understand what they own.",
+    "sentiment": "bearish",
+    "speaker": "David Eichhorn",
+    "ticker_inferred": "",
+    "ticker_stated": "",
+    "timestamp": "57:07"
+   },
+   {
+    "asset": "US life insurers with pension annuity and private credit exposure",
+    "catalyst_date": "",
+    "claim_type": "opinion",
+    "confidence": "low",
+    "horizon": "unknown",
+    "kind": "sector",
+    "quote": "a lot of insurers have moved aggressively into private credit \u2014 that's a concern of mine, undoubtedly.",
+    "reasoning": "He worries about the next too-big-to-fail risk, since many insurers have moved aggressively into private credit and state guaranty associations are effectively unfunded.",
+    "sentiment": "bearish",
+    "speaker": "David Eichhorn",
+    "ticker_inferred": "KIE",
+    "ticker_stated": "",
+    "timestamp": "59:13"
+   },
+   {
+    "asset": "US Treasuries (long end)",
+    "catalyst_date": "",
+    "claim_type": "opinion",
+    "confidence": "medium",
+    "horizon": "unknown",
+    "kind": "other",
+    "quote": "the U.S. government is issuing a lot of debt, which is undoubtedly pushing rates higher.",
+    "reasoning": "He attributes higher yields to heavy government debt issuance, hyperscaler issuance, sticky inflation, tariffs and oil, and waning foreign demand, though he is puzzled by how far the back end has sold off.",
+    "sentiment": "bearish",
+    "speaker": "David Eichhorn",
+    "ticker_inferred": "TLT",
+    "ticker_stated": "",
+    "timestamp": "40:26"
+   },
+   {
+    "asset": "Hyperscaler and AI-related corporate bond issuance",
+    "catalyst_date": "",
+    "claim_type": "opinion",
+    "confidence": "medium",
+    "horizon": "unknown",
+    "kind": "sector",
+    "quote": "The hyperscalers' issuance is government-like \u2014 it's country-building-scale what we're talking about here.",
+    "reasoning": "Issuers are very profitable with no near-term repayment concern, but their relentless new issuance with concessions is pushing yields and spreads wider.",
+    "sentiment": "mixed",
+    "speaker": "David Eichhorn",
+    "ticker_inferred": "",
+    "ticker_stated": "",
+    "timestamp": "40:38"
+   },
+   {
+    "asset": "Nvidia",
+    "catalyst_date": "",
+    "claim_type": "opinion",
+    "confidence": "medium",
+    "horizon": "near-term",
+    "kind": "stock",
+    "quote": "there's no near-term concern that, say, Nvidia won't be able to pay off its debts.",
+    "reasoning": "He cites it as an example of an issuer with no near-term concern about paying off debt.",
+    "sentiment": "neutral",
+    "speaker": "David Eichhorn",
+    "ticker_inferred": "",
+    "ticker_stated": "NVDA",
+    "timestamp": "41:53"
+   },
+   {
+    "asset": "Municipal bonds",
+    "catalyst_date": "",
+    "claim_type": "opinion",
+    "confidence": "low",
+    "horizon": "unknown",
+    "kind": "other",
+    "quote": "munis aren't my space exactly, but for a taxable investor they make a lot of sense.",
+    "reasoning": "Hosting host-cited yields of 4.6-4.7% tax-free look attractive for taxable investors, though it is not his area and some state fiscal concerns are legitimate.",
+    "sentiment": "bullish",
+    "speaker": "David Eichhorn",
+    "ticker_inferred": "MUB",
+    "ticker_stated": "",
+    "timestamp": "46:11"
+   },
+   {
+    "asset": "Investment-grade credit (spread product)",
+    "catalyst_date": "",
+    "claim_type": "opinion",
+    "confidence": "medium",
+    "horizon": "unknown",
+    "kind": "other",
+    "quote": "spreads have been grinding tighter because it's been a great credit environment.",
+    "reasoning": "Spreads have ground tighter, so managers must own lower-spread assets and are poorly set up for an air pocket in a distressed environment.",
+    "sentiment": "bearish",
+    "speaker": "David Eichhorn",
+    "ticker_inferred": "LQD",
+    "ticker_stated": "",
+    "timestamp": "27:31"
+   },
+   {
+    "asset": "Oil",
+    "catalyst_date": "",
+    "claim_type": "opinion",
+    "confidence": "low",
+    "horizon": "three to twelve months",
+    "kind": "commodity",
+    "quote": "I don't think anyone expects $100 oil for 30 years, maybe for three, six months, or a year.",
+    "reasoning": "He says war and tariffs have spooked oil and added inflation concern, but doesn't expect sustained $100 oil for decades.",
+    "sentiment": "mixed",
+    "speaker": "David Eichhorn",
+    "ticker_inferred": "USO",
+    "ticker_stated": "",
+    "timestamp": "42:53"
+   },
+   {
+    "asset": "Inflation breakevens (long end)",
+    "catalyst_date": "",
+    "claim_type": "reported_fact",
+    "confidence": "medium",
+    "horizon": "unknown",
+    "kind": "other",
+    "quote": "breakevens \u2014 have really hung in there, particularly on the back end. In the low 2%.",
+    "reasoning": "Breakevens have held in the low 2% range, signaling Fed credibility, so the rise in yields has come from real yields.",
+    "sentiment": "neutral",
+    "speaker": "David Eichhorn",
+    "ticker_inferred": "",
+    "ticker_stated": "",
+    "timestamp": "43:22"
+   },
+   {
+    "asset": "European and UK government bonds",
+    "catalyst_date": "",
+    "claim_type": "opinion",
+    "confidence": "low",
+    "horizon": "unknown",
+    "kind": "other",
+    "quote": "the UK has more attractive yields, but the UK has a lot of fiscal challenges too.",
+    "reasoning": "He points to fiscal challenges and need for structural pension reform, and warns real credit risk premium may be creeping into the higher yields.",
+    "sentiment": "bearish",
+    "speaker": "David Eichhorn",
+    "ticker_inferred": "",
+    "ticker_stated": "",
+    "timestamp": "48:03"
+   }
+  ],
+  "podcast": "Table Four",
+  "savedAt": 1795688078449,
+  "source": "Earnings calls",
+  "summary": "Eichhorn argues that long-end Treasury yields have risen on heavy government and hyperscaler debt issuance, sticky inflation and tariffs, and oil, while breakevens stay anchored near low 2%, so real yields (TIPS) look unusually attractive. He is critical of levered, high-fee private credit vehicles and of insurers' private credit exposure, and favors breadth-based, skill-driven active management over spread beta.",
+  "themes": [
+   {
+    "market_impact": "Supply pressure is cited as pushing yields higher, particularly at the long end.",
+    "theme": "US fiscal deficits and heavy Treasury issuance"
+   },
+   {
+    "market_impact": "Large new-issue supply with concessions may keep corporate spreads and benchmark yields elevated.",
+    "theme": "AI hyperscaler debt issuance competing with Treasuries"
+   },
+   {
+    "market_impact": "Inflation concerns support higher yields, though anchored breakevens imply real yields are doing the adjusting.",
+    "theme": "Sticky inflation, tariffs and oil/war effects"
+   },
+   {
+    "market_impact": "Near-record 30-year TIPS real yields may draw liability-driven and retirement-oriented demand.",
+    "theme": "Elevated real yields"
+   },
+   {
+    "market_impact": "Levered BDCs and interval funds may face redemption stress, and insurers with private credit exposure could be a systemic concern.",
+    "theme": "Private credit packaging, leverage and retail access"
+   },
+   {
+    "market_impact": "Spread-heavy active managers may be exposed if a distressed episode occurs.",
+    "theme": "Tight credit spreads and lack of a real business cycle"
+   },
+   {
+    "market_impact": "Higher yields in Japan and the UK reduce overseas appetite for US Treasuries.",
+    "theme": "Waning foreign demand for Treasuries and global yield competition"
+   },
+   {
+    "market_impact": "Continued demand for long-duration and derivative hedges supports long-end bond demand.",
+    "theme": "Pension liability-driven investing and a few plans reopening"
+   }
+  ],
+  "id": "table-four-2026-11-20-1jyu"
+ },
+ {
+  "catalysts": [
+   {
+    "date": "unknown",
+    "event": "Nvidia board investigation still in progress",
+    "related_assets": "Nvidia and the AI supply chain"
+   },
+   {
+    "date": "second half of 2027 (stated as second half of next year)",
+    "event": "Intel server CPU supply improvement and external foundry customers ramping",
+    "related_assets": "Intel"
+   },
+   {
+    "date": "2027",
+    "event": "Wafer fab equipment market growth above 30%, with advanced packaging growth",
+    "related_assets": "Applied Materials"
+   },
+   {
+    "date": "2027",
+    "event": "Nebius revenue expected to grow at least 4x",
+    "related_assets": "Nebius"
+   }
+  ],
+  "date": "2026-11-20",
+  "mentions": [
+   {
+    "asset": "Micron",
+    "catalyst_date": "",
+    "claim_type": "opinion",
+    "confidence": "high",
+    "horizon": "next couple of quarters to years",
+    "kind": "stock",
+    "quote": "risk/reward-wise favors the reward at this valuation. That's Micron.",
+    "reasoning": "Expects huge free cash flow, long-term agreements and a low multiple, arguing this memory cycle differs from prior ones because of the net cash position.",
+    "sentiment": "bullish",
+    "speaker": "Neil",
+    "ticker_inferred": "MU",
+    "ticker_stated": "",
+    "timestamp": "13:29"
+   },
+   {
+    "asset": "Micron 2027 supply sold out",
+    "catalyst_date": "",
+    "claim_type": "reported_fact",
+    "confidence": "medium",
+    "horizon": "2027",
+    "kind": "stock",
+    "quote": "for 2027 they're around 75% or so sold out already.",
+    "reasoning": "Cites the CEO saying roughly 75% of 2027 supply is already sold out under long-term agreements, which reduces cyclicality risk.",
+    "sentiment": "bullish",
+    "speaker": "Neil",
+    "ticker_inferred": "MU",
+    "ticker_stated": "",
+    "timestamp": "13:45"
+   },
+   {
+    "asset": "Micron free cash flow and valuation",
+    "catalyst_date": "",
+    "claim_type": "reported_fact",
+    "confidence": "medium",
+    "horizon": "fiscal 2026-2028",
+    "kind": "stock",
+    "quote": "expected to generate around 50-56 billion of free cash flow, which is way more than the last 10 years combined.",
+    "reasoning": "Says fiscal 2026 free cash flow is expected around $50-56 billion, over $100 billion per year in the following two years, and the stock traded near 4x forward earnings last week.",
+    "sentiment": "bullish",
+    "speaker": "Neil",
+    "ticker_inferred": "MU",
+    "ticker_stated": "",
+    "timestamp": "15:13"
+   },
+   {
+    "asset": "Micron price target",
+    "catalyst_date": "",
+    "claim_type": "prediction",
+    "confidence": "medium",
+    "horizon": "unknown",
+    "kind": "stock",
+    "quote": "it's still around $700 today or so. Let's say it goes back to $1,000.",
+    "reasoning": "Sees a move from about $700 to $1,000 as a nice return even without reaching all-time highs.",
+    "sentiment": "bullish",
+    "speaker": "Neil",
+    "ticker_inferred": "MU",
+    "ticker_stated": "",
+    "timestamp": "16:15"
+   },
+   {
+    "asset": "Applied Materials",
+    "catalyst_date": "",
+    "claim_type": "opinion",
+    "confidence": "high",
+    "horizon": "2027-2028",
+    "kind": "stock",
+    "quote": "Applied Materials is going to be one of those stocks I'd put as my second pick here.",
+    "reasoning": "Company guides to wafer fab equipment market growth above 30% in 2027 and has exposure to advanced packaging, a key bottleneck.",
+    "sentiment": "bullish",
+    "speaker": "unclear",
+    "ticker_inferred": "AMAT",
+    "ticker_stated": "",
+    "timestamp": "18:14"
+   },
+   {
+    "asset": "Applied Materials results and guidance",
+    "catalyst_date": "",
+    "claim_type": "reported_fact",
+    "confidence": "medium",
+    "horizon": "2027",
+    "kind": "stock",
+    "quote": "advanced packaging is expected to grow north of 90% next year.",
+    "reasoning": "Cites FY2026 revenue of $34 billion, Q4 revenue up 53% year over year, and advanced packaging expected to grow over 90% next year.",
+    "sentiment": "bullish",
+    "speaker": "unclear",
+    "ticker_inferred": "AMAT",
+    "ticker_stated": "",
+    "timestamp": "18:21"
+   },
+   {
+    "asset": "Intel",
+    "catalyst_date": "",
+    "claim_type": "opinion",
+    "confidence": "medium",
+    "horizon": "two to three quarters for recovery, with customers arriving in second half of next year",
+    "kind": "stock",
+    "quote": "there is more upside than risk from here on out for Intel.",
+    "reasoning": "Near-term weakness from consumer PC pricing and server CPU supply shortages is seen as temporary, with foundry and advanced packaging demand improving under CEO Lip-Bu Tan.",
+    "sentiment": "bullish",
+    "speaker": "unclear",
+    "ticker_inferred": "INTC",
+    "ticker_stated": "INTC",
+    "timestamp": "9:56"
+   },
+   {
+    "asset": "Intel consumer exposure",
+    "catalyst_date": "",
+    "claim_type": "reported_fact",
+    "confidence": "medium",
+    "horizon": "short term, a quarter or two",
+    "kind": "stock",
+    "quote": "the consumer market is almost 50% of its total revenue",
+    "reasoning": "Weak consumer CPU demand from high memory-driven PC prices is a headwind, and consumer is almost 50% of revenue.",
+    "sentiment": "bearish",
+    "speaker": "unclear",
+    "ticker_inferred": "INTC",
+    "ticker_stated": "INTC",
+    "timestamp": "10:19"
+   },
+   {
+    "asset": "Nebius",
+    "catalyst_date": "",
+    "claim_type": "prediction",
+    "confidence": "high",
+    "horizon": "2027",
+    "kind": "stock",
+    "quote": "they're still expected to 4x revenue, at least 4x revenue, in '27.",
+    "reasoning": "A permitting delay did not stop contract growth and revenue is expected to at least quadruple in 2027.",
+    "sentiment": "bullish",
+    "speaker": "Neil",
+    "ticker_inferred": "NBIS",
+    "ticker_stated": "",
+    "timestamp": "22:21"
+   },
+   {
+    "asset": "CoreWeave",
+    "catalyst_date": "",
+    "claim_type": "reported_fact",
+    "confidence": "high",
+    "horizon": "one year",
+    "kind": "stock",
+    "quote": "CoreWeave's backlog is also 130-plus billion dollars, margins are beating expectations",
+    "reasoning": "Cites a backlog of over $130 billion, margins beating expectations, no delays, and reduced reliance on external funding.",
+    "sentiment": "bullish",
+    "speaker": "Neil",
+    "ticker_inferred": "CRWV",
+    "ticker_stated": "",
+    "timestamp": "22:35"
+   },
+   {
+    "asset": "Nvidia",
+    "catalyst_date": "",
+    "claim_type": "opinion",
+    "confidence": "medium",
+    "horizon": "unknown",
+    "kind": "stock",
+    "quote": "I'm pretty happy that Jensen is back.",
+    "reasoning": "Huang's return is seen as restoring ecosystem confidence after a roughly $2 trillion loss in value, though a one-day rally is not seen as proof and an investigation is still in progress.",
+    "sentiment": "bullish",
+    "speaker": "unclear",
+    "ticker_inferred": "NVDA",
+    "ticker_stated": "",
+    "timestamp": "3:30"
+   },
+   {
+    "asset": "Nvidia market cap move",
+    "catalyst_date": "",
+    "claim_type": "reported_fact",
+    "confidence": "medium",
+    "horizon": "one day",
+    "kind": "stock",
+    "quote": "Nvidia gained $1 trillion in market cap, sitting at almost $4 trillion before the market closed.",
+    "reasoning": "Host reports Nvidia gained $1 trillion in market cap and rose 32% in one day on Huang's reinstatement.",
+    "sentiment": "neutral",
+    "speaker": "unclear",
+    "ticker_inferred": "NVDA",
+    "ticker_stated": "",
+    "timestamp": "0:01"
+   },
+   {
+    "asset": "Broadcom and AMD",
+    "catalyst_date": "",
+    "claim_type": "opinion",
+    "confidence": "medium",
+    "horizon": "unknown",
+    "kind": "stock",
+    "quote": "technically Broadcom and AMD should not have been up today",
+    "reasoning": "They rallied on Huang's return despite being part of the anti-Nvidia trade, which is attributed to a sentiment switch rather than fundamentals.",
+    "sentiment": "mixed",
+    "speaker": "Neil",
+    "ticker_inferred": "AVGO, AMD",
+    "ticker_stated": "",
+    "timestamp": "7:18"
+   },
+   {
+    "asset": "AI and semiconductor stocks broadly",
+    "catalyst_date": "",
+    "claim_type": "opinion",
+    "confidence": "medium",
+    "horizon": "unknown",
+    "kind": "sector",
+    "quote": "the story to us hasn't changed. It just actually became more attractive because it became cheaper",
+    "reasoning": "Valuations are seen as fair to undervalued after 30-50% drawdowns, with no evidence yet of AI demand slowing among large customers.",
+    "sentiment": "bullish",
+    "speaker": "unclear",
+    "ticker_inferred": "SMH",
+    "ticker_stated": "",
+    "timestamp": "4:26"
+   },
+   {
+    "asset": "Neocloud sector",
+    "catalyst_date": "",
+    "claim_type": "opinion",
+    "confidence": "medium",
+    "horizon": "one year",
+    "kind": "sector",
+    "quote": "they need way less external funding than they needed a year ago.",
+    "reasoning": "Established neoclouds need less external funding thanks to prepayments and payback periods approaching one year, while smaller or newer neoclouds are seen as riskier.",
+    "sentiment": "bullish",
+    "speaker": "Neil",
+    "ticker_inferred": "",
+    "ticker_stated": "",
+    "timestamp": "21:33"
+   }
+  ],
+  "podcast": "Table Four",
+  "savedAt": 1795687821982,
+  "source": "Earnings calls",
+  "summary": "The hosts argue the AI and semiconductor selloff was a sentiment-driven overreaction and that Jensen Huang's reinstatement as Nvidia CEO has begun to reverse it, with names still 30-50% below 52-week highs described as attractive. They pick Intel, Micron, Applied Materials, Nebius and CoreWeave, citing memory and packaging constraints, long-term contracts and backlog, while noting that the rally may not retrace the decline at the same pace and that an investigation at Nvidia is still in progress.",
+  "themes": [
+   {
+    "market_impact": "Huang's reinstatement lifted sentiment across AI and semiconductor stocks, but the ongoing investigation could bring new headlines.",
+    "theme": "Nvidia leadership change and governance"
+   },
+   {
+    "market_impact": "The hosts argue 30-50% drawdowns reflect sentiment rather than demand, though they caution rebounds may be slower than the declines.",
+    "theme": "Sentiment-driven AI selloff versus unchanged fundamentals"
+   },
+   {
+    "market_impact": "High memory prices boost memory makers like Micron and increase Nvidia's purchase obligations, but hurt consumer PC demand and Intel's consumer segment.",
+    "theme": "Memory shortage and pricing"
+   },
+   {
+    "market_impact": "Bottlenecks support equipment makers such as Applied Materials and push customers toward second or third sourcing options like Intel.",
+    "theme": "Advanced packaging and CPU supply constraints"
+   },
+   {
+    "market_impact": "Applied Materials expects wafer fab equipment market growth above 30% in 2027, supporting the equipment supply chain.",
+    "theme": "Semiconductor equipment spending cycle"
+   },
+   {
+    "market_impact": "Permitting delays and financing risk at smaller players remain risks, though large customers have not been seen pulling back.",
+    "theme": "Data center buildout risks"
+   },
+   {
+    "market_impact": "The hosts mention US political aspects and White House pushback as factors that weighed on sentiment around Nvidia.",
+    "theme": "Political and regulatory pressure"
+   }
+  ],
+  "id": "table-four-2026-11-20-dtu0"
+ },
+ {
+  "catalysts": [
+   {
+    "date": "about ten days after Nov 20, 2026",
+    "event": "Spanish general election",
+    "related_assets": "Spanish equities, EUR"
+   },
+   {
+    "date": "January 2027",
+    "event": "End of China's pause on rare-metal export restrictions",
+    "related_assets": "Gallium, germanium, antimony, defense and tech supply chains"
+   },
+   {
+    "date": "week of Nov 20, 2026",
+    "event": "Anthropic IPO market reaction",
+    "related_assets": "Tech and AI stocks"
+   },
+   {
+    "date": "Nov 2026",
+    "event": "Trump-Xi-Putin summit outcome (APEC sidelines)",
+    "related_assets": "Oil, rare metals, defense, Chinese and Russian assets"
+   },
+   {
+    "date": "unknown",
+    "event": "Possible SpaceX-Tesla merger decision by special committees and shareholders",
+    "related_assets": "TSLA, SpaceX"
+   },
+   {
+    "date": "about a year from Nov 2026",
+    "event": "Taiwan elections",
+    "related_assets": "TSM, Taiwan equities"
+   }
+  ],
+  "date": "2026-11-20",
+  "mentions": [
+   {
+    "asset": "Crude oil (WTI/Brent)",
+    "catalyst_date": "",
+    "claim_type": "reported_fact",
+    "confidence": "medium",
+    "horizon": "through 2030",
+    "kind": "commodity",
+    "quote": "Oil was $82 a barrel yesterday. The average price at the pump in the US was $3.70 a gallon.",
+    "reasoning": "He says oil is back to about $82 and that China's oil demand may have peaked, which would pressure producers if oil falls to $40-50.",
+    "sentiment": "bearish",
+    "speaker": "Yonatan Adiri",
+    "ticker_inferred": "USO",
+    "ticker_stated": "",
+    "timestamp": "12:15"
+   },
+   {
+    "asset": "Tesla",
+    "catalyst_date": "",
+    "claim_type": "reported_fact",
+    "confidence": "medium",
+    "horizon": "unknown",
+    "kind": "stock",
+    "quote": "Tesla already trades at 439 times earnings.",
+    "reasoning": "A merger with SpaceX is discussed as strategically logical (robotaxis, robotics, connectivity), but the stock is described as trading at 439x earnings and shareholders face control and dilution questions.",
+    "sentiment": "mixed",
+    "speaker": "unclear",
+    "ticker_inferred": "TSLA",
+    "ticker_stated": "",
+    "timestamp": "54:45"
+   },
+   {
+    "asset": "SpaceX",
+    "catalyst_date": "",
+    "claim_type": "prediction",
+    "confidence": "medium",
+    "horizon": "unknown",
+    "kind": "stock",
+    "quote": "His 48% stake gives him 85% of the vote.",
+    "reasoning": "A speaker says it makes sense for SpaceX to absorb Tesla because Musk's voting control would remain a majority; the hosts see strong strategic fit via Starlink and Starship.",
+    "sentiment": "bullish",
+    "speaker": "unclear",
+    "ticker_inferred": "",
+    "ticker_stated": "",
+    "timestamp": "55:35"
+   },
+   {
+    "asset": "Alphabet/Google",
+    "catalyst_date": "",
+    "claim_type": "reported_fact",
+    "confidence": "medium",
+    "horizon": "unknown",
+    "kind": "stock",
+    "quote": "Ad revenue is still growing, but much more slowly than it had been for the past 40 quarters straight.",
+    "reasoning": "Ad revenue growth is slowing, AI answers cut clicks, and free cash flow fell sharply on AI capex, which sent the stock down.",
+    "sentiment": "bearish",
+    "speaker": "Yonatan Adiri",
+    "ticker_inferred": "GOOGL",
+    "ticker_stated": "",
+    "timestamp": "1:07:21"
+   },
+   {
+    "asset": "Google search ads / SEO industry",
+    "catalyst_date": "",
+    "claim_type": "reported_fact",
+    "confidence": "high",
+    "horizon": "unknown",
+    "kind": "sector",
+    "quote": "when a Gemini answer showed up on the page... clicks dropped by half.",
+    "reasoning": "A Pew study is cited showing clicks halve when an AI answer appears, and the hosts say SEO spending is dying.",
+    "sentiment": "bearish",
+    "speaker": "Gili Beiman",
+    "ticker_inferred": "",
+    "ticker_stated": "",
+    "timestamp": "1:05:32"
+   },
+   {
+    "asset": "Brand and out-of-home advertising",
+    "catalyst_date": "",
+    "claim_type": "prediction",
+    "confidence": "low",
+    "horizon": "multi-year",
+    "kind": "sector",
+    "quote": "Maybe we're going back to a world of branding, Yonatan.",
+    "reasoning": "He predicts that if agents replace click auctions, branding, sports sponsorship and billboards regain importance.",
+    "sentiment": "bullish",
+    "speaker": "Gili Beiman",
+    "ticker_inferred": "",
+    "ticker_stated": "",
+    "timestamp": "1:17:31"
+   },
+   {
+    "asset": "Rare metals (gallium, germanium, antimony)",
+    "catalyst_date": "January 2027",
+    "claim_type": "reported_fact",
+    "confidence": "medium",
+    "horizon": "January 2027 and through 2030",
+    "kind": "commodity",
+    "quote": "That pause is meant to end in January.",
+    "reasoning": "China's export pause is due to end in January, and he says ex-China supply is dear; Trump promises US output on par with China by decade's end.",
+    "sentiment": "bullish",
+    "speaker": "Yonatan Adiri",
+    "ticker_inferred": "",
+    "ticker_stated": "",
+    "timestamp": "30:55"
+   },
+   {
+    "asset": "Nvidia",
+    "catalyst_date": "",
+    "claim_type": "reported_fact",
+    "confidence": "low",
+    "horizon": "unknown",
+    "kind": "stock",
+    "quote": "China also can't rent space in data centers abroad or use their computing power.",
+    "reasoning": "A congressional bill would bar China from renting overseas data-center compute, which is a restriction on a key customer base.",
+    "sentiment": "bearish",
+    "speaker": "Gili Beiman",
+    "ticker_inferred": "NVDA",
+    "ticker_stated": "Nvidia",
+    "timestamp": "41:35"
+   },
+   {
+    "asset": "Saudi Arabia and Iran (oil-dependent budgets)",
+    "catalyst_date": "",
+    "claim_type": "prediction",
+    "confidence": "medium",
+    "horizon": "through 2030",
+    "kind": "other",
+    "quote": "I wouldn't want to be Saudi Arabia, already heading into deficits, or Iran",
+    "reasoning": "If China's oil demand has peaked and prices fall to $40-50, their budgets are hard to balance.",
+    "sentiment": "bearish",
+    "speaker": "Yonatan Adiri",
+    "ticker_inferred": "KSA",
+    "ticker_stated": "",
+    "timestamp": "14:34"
+   },
+   {
+    "asset": "Life360",
+    "catalyst_date": "",
+    "claim_type": "reported_fact",
+    "confidence": "low",
+    "horizon": "unknown",
+    "kind": "stock",
+    "quote": "It's publicly traded and has 107 million monthly active users worldwide.",
+    "reasoning": "He cites 107 million monthly users and 40% revenue growth but gives no view on the stock.",
+    "sentiment": "neutral",
+    "speaker": "Gili Beiman",
+    "ticker_inferred": "LIF",
+    "ticker_stated": "Life360",
+    "timestamp": "1:28:48"
+   },
+   {
+    "asset": "Turkish equities",
+    "catalyst_date": "",
+    "claim_type": "reported_fact",
+    "confidence": "low",
+    "horizon": "unknown",
+    "kind": "index",
+    "quote": "About a month ago the stock market crashed because of horrendous corruption in a market with low liquidity.",
+    "reasoning": "A market crash from manipulation, a media crackdown and the jailing of the opposition leader point to governance risk.",
+    "sentiment": "bearish",
+    "speaker": "Yonatan Adiri",
+    "ticker_inferred": "TUR",
+    "ticker_stated": "",
+    "timestamp": "19:02"
+   },
+   {
+    "asset": "Agricultural commodities (corn, wheat, soybeans)",
+    "catalyst_date": "",
+    "claim_type": "reported_fact",
+    "confidence": "medium",
+    "horizon": "unknown",
+    "kind": "commodity",
+    "quote": "corn, soybeans and wheat are all back to February prices.",
+    "reasoning": "He says prices have returned to February levels without reserve releases.",
+    "sentiment": "neutral",
+    "speaker": "Yonatan Adiri",
+    "ticker_inferred": "",
+    "ticker_stated": "",
+    "timestamp": "13:13"
+   }
+  ],
+  "podcast": "Table Four",
+  "savedAt": 1795686154669,
+  "summary": "The hosts argue Iran's attempt to weaponize global inflation via Hormuz has failed, with oil, fuel and grain prices back near February levels, while China holds leverage through rare-metal export controls and a possible peak in its oil demand. They also discuss a possible SpaceX-Tesla merger, AI chatbots eroding Google's click-based ad model, and Alphabet's slowing ad growth and falling free cash flow; many figures are speaker assertions that need verification.",
+  "themes": [
+   {
+    "market_impact": "Lower energy and food inflation pressure supports risk assets, but a renewed Iran conflict is flagged as a tail risk.",
+    "theme": "Iran's Hormuz inflation strategy has faded, though US carrier deployments continue"
+   },
+   {
+    "market_impact": "Outcomes on Ukraine, Iran, Taiwan and trade could shift sanctions, energy and tech-export risk premia.",
+    "theme": "Trump-Xi-Putin summit"
+   },
+   {
+    "market_impact": "A resumption of export curbs could hit defense and tech supply chains in the US, Japan and Germany.",
+    "theme": "China's rare-metal leverage and the January export pause"
+   },
+   {
+    "market_impact": "Structurally lower oil demand would pressure oil prices and the budgets of producers such as Saudi Arabia and Iran.",
+    "theme": "Possible peak in China's oil demand"
+   },
+   {
+    "market_impact": "Search ad revenue and SEO spending are at risk, while subscriptions, branding and cloud may gain share.",
+    "theme": "AI chatbots disrupting search advertising"
+   },
+   {
+    "market_impact": "Governance and dilution concerns may affect Tesla and SpaceX valuation and the debate over one-share-one-vote.",
+    "theme": "Super-voting control and a possible SpaceX-Tesla merger"
+   },
+   {
+    "market_impact": "Proposed limits on China's access to compute abroad could affect Nvidia's demand and data-center operators in Singapore and Malaysia.",
+    "theme": "US-China AI chip restrictions"
+   },
+   {
+    "market_impact": "Spain's election and Turkey's democratic backsliding may influence regional sentiment and Turkish assets.",
+    "theme": "Political risk in Spain and Turkey"
+   }
+  ],
+  "id": "table-four-2026-11-20-t5gq"
+ }
+]
