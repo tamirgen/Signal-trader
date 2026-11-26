@@ -556,7 +556,7 @@
   "podcast": "NVIDIA Q3 FY27 earnings call",
   "savedAt": 1795690000000,
   "source": "Earnings calls",
-  "summary": "Nvidia posted $115.8B revenue (+103%), guided Q4 to $130B \u00b13% (extra week) and FY28 growth to ~75%. Vera Rubin ramps to ~$20B in its first quarter. Offsetting: Huang resigned and the board won't reinstate him, $32B neocloud commitments plus $118B conditional guarantees, and no China Hopper shipments with new export controls under study.",
+  "summary": "Nvidia posted $115.8B revenue (+103%), guided Q4 to $130B ±3% (extra week) and FY28 growth to ~75%. Vera Rubin ramps to ~$20B in its first quarter. Offsetting: Huang resigned and the board won't reinstate him, $32B neocloud commitments plus $118B conditional guarantees, and no China Hopper shipments with new export controls under study.",
   "themes": [
    {
     "market_impact": "Supports compute demand and pricing power for AI infrastructure",
@@ -614,7 +614,7 @@
     "confidence": "medium",
     "horizon": "unknown",
     "kind": "other",
-    "quote": "when the pain comes \u2014 which it invariably does in every asset class \u2014 and folks want to redeem, we're going to see some ugly situations",
+    "quote": "when the pain comes — which it invariably does in every asset class — and folks want to redeem, we're going to see some ugly situations",
     "reasoning": "He expects ugly redemption situations when pain arrives, because investors do not understand what they own.",
     "sentiment": "bearish",
     "speaker": "David Eichhorn",
@@ -629,7 +629,7 @@
     "confidence": "low",
     "horizon": "unknown",
     "kind": "sector",
-    "quote": "a lot of insurers have moved aggressively into private credit \u2014 that's a concern of mine, undoubtedly.",
+    "quote": "a lot of insurers have moved aggressively into private credit — that's a concern of mine, undoubtedly.",
     "reasoning": "He worries about the next too-big-to-fail risk, since many insurers have moved aggressively into private credit and state guaranty associations are effectively unfunded.",
     "sentiment": "bearish",
     "speaker": "David Eichhorn",
@@ -659,7 +659,7 @@
     "confidence": "medium",
     "horizon": "unknown",
     "kind": "sector",
-    "quote": "The hyperscalers' issuance is government-like \u2014 it's country-building-scale what we're talking about here.",
+    "quote": "The hyperscalers' issuance is government-like — it's country-building-scale what we're talking about here.",
     "reasoning": "Issuers are very profitable with no near-term repayment concern, but their relentless new issuance with concessions is pushing yields and spreads wider.",
     "sentiment": "mixed",
     "speaker": "David Eichhorn",
@@ -734,7 +734,7 @@
     "confidence": "medium",
     "horizon": "unknown",
     "kind": "other",
-    "quote": "breakevens \u2014 have really hung in there, particularly on the back end. In the low 2%.",
+    "quote": "breakevens — have really hung in there, particularly on the back end. In the low 2%.",
     "reasoning": "Breakevens have held in the low 2% range, signaling Fed credibility, so the rise in yields has come from real yields.",
     "sentiment": "neutral",
     "speaker": "David Eichhorn",
@@ -1339,5 +1339,275 @@
    }
   ],
   "id": "table-four-2026-11-20-t5gq"
+ },
+ {
+  "id": "all-in-2026-11-23-7a35",
+  "podcast": "All-In",
+  "source": "YouTube finance shows",
+  "date": "2026-11-23",
+  "title": "CrowdStrike CEO: AI Cyberattack Wave, Hyperspeed Hacks, & The Patching Problem",
+  "url": "https://allinchamathjason.libsyn.com/crowdstrike-ceo-ai-cyberattack-wave-hyperspeed-hacks-the-patching-problem",
+  "transcript_source": "Deepgram speech-to-text",
+  "savedAt": 1795701306838,
+  "summary": "CrowdStrike CEO George Kurtz joins Jason Calacanis to discuss a surge in AI-driven cyber risk. He says CVE discoveries have exploded, with 17,000 so far in 2026 and a 300% year-over-year increase, and that open AI attack frameworks like RTX (12,000+ forks) can compromise a company in under three hours. He argues many of the recent high-profile outages at Microsoft, FAA, Chase and others came from rushed patching ('break or breach') rather than attacks. Both speakers are strongly bullish on local and open-weight AI running on devices like Apple's Mac Studio; Kurtz says 'Apple's gonna kill it' and Calacanis says he bought Apple stock.",
+  "themes": [
+   {
+    "theme": "AI-driven explosion in discovered vulnerabilities and autonomous attacks",
+    "market_impact": "Raises demand for AI-native cybersecurity defense and pressures enterprises to modernize legacy IT. Offense is currently ahead of defense."
+   },
+   {
+    "theme": "Break or breach: rushed patching causing outages",
+    "market_impact": "Enterprises are accepting scheduled downtime. Legacy-heavy sectors (finance, healthcare, critical infrastructure) face modernization spending."
+   },
+   {
+    "theme": "Shift to local/open-weight AI and AI sovereignty",
+    "market_impact": "Positive for local AI hardware (Apple Mac Studio, Nvidia DGX Spark). Volume of tokens shifts toward open-weight models, while frontier labs retain monetized tokens."
+   },
+   {
+    "theme": "Identity-based attacks (session token theft, North Korean fake IT workers)",
+    "market_impact": "Supports demand for identity and authentication security."
+   }
+  ],
+  "catalysts": [
+   {
+    "date": "Ongoing (week of 2026-11-23)",
+    "event": "Latest Java vulnerability and PHP exposures driving rush-to-patch outages",
+    "related_assets": "Enterprise software, cybersecurity vendors"
+   },
+   {
+    "date": "January 2027",
+    "event": "Davos, where Kurtz and the All-In hosts will discuss security and AI",
+    "related_assets": "Cybersecurity sector"
+   }
+  ],
+  "mentions": [
+   {
+    "asset": "Apple",
+    "sentiment": "bullish",
+    "speaker": "George Kurtz",
+    "confidence": "high",
+    "horizon": "medium",
+    "claim_type": "opinion",
+    "kind": "stock",
+    "ticker_stated": "AAPL",
+    "ticker_inferred": "",
+    "catalyst_date": "",
+    "reasoning": "Local AI inference on high-memory Mac Studios will be a massive opportunity as companies seek AI sovereignty and lower costs.",
+    "quote": "by the way, I think Apple's gonna kill it",
+    "timestamp": ""
+   },
+   {
+    "asset": "Apple",
+    "sentiment": "bullish",
+    "speaker": "Jason Calacanis",
+    "confidence": "high",
+    "horizon": "medium",
+    "claim_type": "opinion",
+    "kind": "stock",
+    "ticker_stated": "AAPL",
+    "ticker_inferred": "",
+    "catalyst_date": "",
+    "reasoning": "He holds a position, believing an engineer CEO will seize the local AI and privacy opportunity with Mac Studios. He expects every worker to have such a machine.",
+    "quote": "I literally have bought the stock",
+    "timestamp": ""
+   },
+   {
+    "asset": "Local AI / open-weight model inference",
+    "sentiment": "bullish",
+    "speaker": "George Kurtz",
+    "confidence": "high",
+    "horizon": "1 year",
+    "claim_type": "prediction",
+    "kind": "sector",
+    "ticker_stated": "",
+    "ticker_inferred": "AAPL, NVDA, AMD",
+    "catalyst_date": "",
+    "reasoning": "Enterprises are ending token maxing and want data sovereignty, so they will post-train their own open-weight models. Idle edge compute will absorb inference.",
+    "quote": "we look at how much local AI is going to be used, it's going to be off the charts in my opinion",
+    "timestamp": ""
+   },
+   {
+    "asset": "Frontier AI labs (OpenAI, Anthropic)",
+    "sentiment": "mixed",
+    "speaker": "Jason Calacanis",
+    "confidence": "medium",
+    "horizon": "medium",
+    "claim_type": "prediction",
+    "kind": "private company",
+    "ticker_stated": "",
+    "ticker_inferred": "",
+    "catalyst_date": "",
+    "reasoning": "Most tokens will run on open-source models locally, but frontier labs will still capture the majority of monetized tokens. He says frontier investors downplay the local threat.",
+    "quote": "the trend is majority of tokens will be open source, majority of monetized tokens by definition will will be the Frontier Labs",
+    "timestamp": ""
+   },
+   {
+    "asset": "Cybersecurity sector / AI-native defense",
+    "sentiment": "bullish",
+    "speaker": "George Kurtz",
+    "confidence": "medium",
+    "horizon": "medium",
+    "claim_type": "opinion",
+    "kind": "sector",
+    "ticker_stated": "",
+    "ticker_inferred": "CRWD, PANW, ZS",
+    "catalyst_date": "",
+    "reasoning": "Exponential vulnerability growth, the RTX attack framework and democratized nation-state capabilities leave offense ahead. The industry must arm defenders with agentic AI.",
+    "quote": "it's coming at a volume we've never seen before",
+    "timestamp": ""
+   },
+   {
+    "asset": "Legacy IT modernization (finance, healthcare, critical infrastructure)",
+    "sentiment": "bullish",
+    "speaker": "George Kurtz",
+    "confidence": "medium",
+    "horizon": "medium",
+    "claim_type": "opinion",
+    "kind": "sector",
+    "ticker_stated": "",
+    "ticker_inferred": "",
+    "catalyst_date": "",
+    "reasoning": "Patch windows have collapsed, so legacy-heavy industries must modernize to cloud-native setups with near-instant patch cycles, creating an industry opportunity.",
+    "quote": "they've gotta go through this modernization now to get to a point where the patch cycles are like almost instantaneous, and that that's an opportunity in the industry as well",
+    "timestamp": ""
+   },
+   {
+    "asset": "Tech stocks",
+    "sentiment": "neutral",
+    "speaker": "Jason Calacanis",
+    "confidence": "low",
+    "horizon": "short",
+    "claim_type": "reported_fact",
+    "kind": "sector",
+    "ticker_stated": "",
+    "ticker_inferred": "",
+    "catalyst_date": "",
+    "reasoning": "A passing remark that tech stocks were down during the week of filming.",
+    "quote": "It's a rough week for tech.",
+    "timestamp": ""
+   }
+  ]
+ },
+ {
+  "id": "masters-in-business-2026-11-25-c797",
+  "podcast": "Masters in Business",
+  "source": "Masters in Business",
+  "date": "2026-11-25",
+  "title": "At The Money Fan Favorite: Who Is Wealthy in America, and How Did They Get Rich?",
+  "url": "https://omny.fm/shows/masters-in-business/at-the-money-fan-favorite-who-is-wealthy-in-america-and-how-did-they-get-rich",
+  "transcript_source": "feed transcript",
+  "savedAt": 1795701341259,
+  "summary": "Barry Ritholtz interviews economists Owen Zidar and Eric Zwick about their book 'The Everywhere Millionaire,' built from linked IRS tax data. They find that top U.S. wealth is concentrated among roughly 3 million private business owners worth $5M+ (more than 10x the Forbes 400 combined) spread across unglamorous industries such as auto dealers, HVAC, dental practices and distributors. They argue that pass-through tax treatment since the 1986 reform, extended by the Bush cuts and the 2017 TCJA 20% deduction, drove much of the rise in top incomes. They also say business ownership rather than salaried income is the main path to wealth. They note founders earn about 10% more on average even including failures, and that retiring baby-boomer owners create acquisition opportunities for younger operators.",
+  "themes": [
+   {
+    "theme": "Own vs. earn: private business ownership as primary wealth driver",
+    "market_impact": "Supports interest in private small-business acquisition and search funds, and in lending to small-business buyers such as seller financing and SBA-style loans. No direct public equity call."
+   },
+   {
+    "theme": "Pass-through tax advantages (1986 reform, TCJA 20% deduction, state PTE SALT workaround)",
+    "market_impact": "Tax policy has structurally favored pass-through entities. Future changes to the pass-through deduction would materially affect private business owner economics."
+   },
+   {
+    "theme": "Boomer business-owner succession wave",
+    "market_impact": "Large supply of private businesses coming up for sale as owners in their 60s-70s retire. Potential deal flow for buyers and private equity."
+   },
+   {
+    "theme": "Tech disruption of small local businesses",
+    "market_impact": "Small retail, local newspapers and taxi firms have been hollowed out by large tech platforms. Businesses in less disruptable 'unsexy' service industries are viewed as more durable."
+   }
+  ],
+  "catalysts": [],
+  "mentions": [
+   {
+    "asset": "Private business ownership (owning equity vs. earning salary)",
+    "sentiment": "bullish",
+    "speaker": "Owen Zidar",
+    "confidence": "high",
+    "horizon": "long",
+    "claim_type": "opinion",
+    "kind": "asset class",
+    "ticker_stated": "",
+    "ticker_inferred": "",
+    "catalyst_date": "",
+    "reasoning": "In the top 0.1%, most income comes from business income rather than salary. Two-thirds of wealth growth since 1989 for the top 0.1% came from private business, making ownership the main path to wealth.",
+    "quote": "the main typical way you get wealthy in the country is by owning something rather than earning.",
+    "timestamp": ""
+   },
+   {
+    "asset": "Starting a new business (founder returns)",
+    "sentiment": "bullish",
+    "speaker": "Eric Zwick",
+    "confidence": "medium",
+    "horizon": "long",
+    "claim_type": "reported_fact",
+    "kind": "other",
+    "ticker_stated": "",
+    "ticker_inferred": "",
+    "catalyst_date": "",
+    "reasoning": "Tracking about 10 million business founding events since 2000, founders earned roughly 10% higher incomes than similar workers on average, including failures. About 20% of founders are serial founders.",
+    "quote": "while they are taking more risk, on average, it seems to be a pretty good deal for these people.",
+    "timestamp": ""
+   },
+   {
+    "asset": "Pass-through business tax treatment",
+    "sentiment": "bullish",
+    "speaker": "Eric Zwick",
+    "confidence": "medium",
+    "horizon": "long",
+    "claim_type": "reported_fact",
+    "kind": "macro",
+    "ticker_stated": "",
+    "ticker_inferred": "",
+    "catalyst_date": "",
+    "reasoning": "Since the 1986 reform, individual rates have been below corporate rates. Later cuts, payroll tax carve-outs and the 2017 20% deduction made pass-through status highly advantageous, driving massive growth in the sector.",
+    "quote": "it's like a great deal to be a business owner.",
+    "timestamp": ""
+   },
+   {
+    "asset": "Acquiring businesses from retiring owners (succession opportunity)",
+    "sentiment": "bullish",
+    "speaker": "Owen Zidar",
+    "confidence": "medium",
+    "horizon": "long",
+    "claim_type": "opinion",
+    "kind": "other",
+    "ticker_stated": "",
+    "ticker_inferred": "",
+    "catalyst_date": "",
+    "reasoning": "Many business owners in their 60s-70s want to retire without heirs to take over. Younger operators can gain expertise and buy these firms, often with seller financing.",
+    "quote": "there's this big– boom of business owners who, like I said, are in their 60s or 70s, many of them want to retire.",
+    "timestamp": ""
+   },
+   {
+    "asset": "U.S. new business formation",
+    "sentiment": "bullish",
+    "speaker": "Barry Ritholtz",
+    "confidence": "low",
+    "horizon": "medium",
+    "claim_type": "reported_fact",
+    "kind": "macro",
+    "ticker_stated": "",
+    "ticker_inferred": "",
+    "catalyst_date": "",
+    "reasoning": "Barry notes new company formation has been at record highs every year since the pandemic, consistent with a strong U.S. entrepreneurial culture.",
+    "quote": "new company formation at record highs and every year since the pandemic.",
+    "timestamp": ""
+   },
+   {
+    "asset": "Small local retail, local newspapers, small taxi companies",
+    "sentiment": "bearish",
+    "speaker": "Barry Ritholtz",
+    "confidence": "low",
+    "horizon": "long",
+    "claim_type": "opinion",
+    "kind": "sector",
+    "ticker_stated": "",
+    "ticker_inferred": "",
+    "catalyst_date": "",
+    "reasoning": "Barry says big tech players such as Amazon, Craigslist and Uber have disrupted these businesses and driven many out of business, unlike more durable sectors like HVAC and auto dealerships.",
+    "quote": "there have been huge, huge swaths of the economy that have been completely disrupted by the big players in technology.",
+    "timestamp": ""
+   }
+  ]
  }
 ]
