@@ -1,0 +1,39 @@
+# Trading rules for signal-trader. Edit here, not in code.
+
+eligibility:
+  require_ticker_stated: true        # only trade tickers the speaker actually named
+  sentiments: [bullish]              # bearish mentions are logged as skipped, not traded
+  confidences: [medium, high]
+
+# Episodes to skip entirely. Their mentions are still logged as skipped, with the reason.
+episode_exclusions:
+  - podcast_prefix: "Table Four"
+    date: "2026-11-20"
+    reason: "Table Four 2026-11-20 metadata is wrong, pending fix"
+
+entry:
+  notional_usd: 1000                 # fixed $ per signal, market order, time in force DAY
+
+benchmark:
+  symbol: SPY                        # hypothetical purchase recorded at each entry's fill time; never ordered
+  notional_usd: 1000
+
+# Holding period in trading days, by horizon bucket.
+horizons:
+  short: 20
+  medium: 60
+  long: 180
+
+# Horizons in signals.json are free text ("near term", "2027", "two to three quarters").
+# An exact bucket name wins; otherwise the first bucket whose keyword appears is used,
+# checked in this order. Nothing matches -> horizon_default.
+horizon_keywords:
+  short: [short, near, day, week, month]
+  medium: [medium, quarter]
+  long: [long, year, multi, "202"]
+horizon_default: medium
+
+# Market data feed for benchmark prices: iex works on free Alpaca accounts, sip needs a subscription.
+data_feed: iex
+
+ticker_aliases: {}                   # e.g. {GOOG.L: GOOGL}; applied after normalization

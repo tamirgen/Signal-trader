@@ -1,0 +1,30 @@
+name: daily
+on:
+  schedule:
+    # 13:07 UTC on weekdays = 08:07 ET (winter) / 09:07 ET (summer): before the 09:30 open,
+    # so market orders queue for the open. run_daily.sh exits early on market holidays.
+    - cron: "7 13 * * 1-5"
+  workflow_dispatch:
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r requirements.txt
+      - run: python -m unittest discover -s tests
+      # Orders are placed only when the repository variable LIVE_PAPER is "true".
+      # The runner keeps no database: order state is rebuilt from Alpaca via client_order_ids.
+      - run: ./run_daily.sh ${{ vars.LIVE_PAPER == 'true' && '--paper' || '' }}
+        env:
+          ALPACA_KEY: ${{ secrets.ALPACA_KEY }}
+          ALPACA_SECRET: ${{ secrets.ALPACA_SECRET }}
+          ALPACA_BASE_URL: https://paper-api.alpaca.markets
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: report
+          path: reports/
