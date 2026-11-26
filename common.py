@@ -34,13 +34,13 @@ def load_env() -> None:
 # ---------- database ----------
 SCHEMA = """
 CREATE TABLE IF NOT EXISTS episodes (
-    id TEXT PRIMARY KEY, podcast TEXT, source TEXT, date TEXT, summary TEXT
+    id TEXT PRIMARY KEY, podcast TEXT, source TEXT, date TEXT, summary TEXT, title TEXT, url TEXT
 );
 CREATE TABLE IF NOT EXISTS signals (
     mention_id TEXT PRIMARY KEY,           -- episode_id#index in signals.json
     episode_id TEXT REFERENCES episodes(id),
     asset TEXT, sentiment TEXT, speaker TEXT, confidence TEXT, horizon TEXT, claim_type TEXT,
-    ticker_stated TEXT, ticker_inferred TEXT, catalyst_date TEXT,
+    ticker_stated TEXT, ticker_inferred TEXT, catalyst_date TEXT, reasoning TEXT, quote TEXT,
     ticker TEXT,                           -- normalized ticker_stated
     horizon_bucket TEXT, hold_days INTEGER,
     status TEXT NOT NULL,                  -- eligible | skipped
@@ -70,10 +70,21 @@ def db_path() -> Path:
     return Path(os.environ.get("SIGNAL_DB", ROOT / "signal_trader.db"))
 
 
+MIGRATIONS = [  # columns added after the first release; ignored if already present
+    "ALTER TABLE episodes ADD COLUMN title TEXT", "ALTER TABLE episodes ADD COLUMN url TEXT",
+    "ALTER TABLE signals ADD COLUMN reasoning TEXT", "ALTER TABLE signals ADD COLUMN quote TEXT",
+]
+
+
 def db() -> sqlite3.Connection:
     con = sqlite3.connect(db_path())
     con.row_factory = sqlite3.Row
     con.executescript(SCHEMA)
+    for m in MIGRATIONS:
+        try:
+            con.execute(m)
+        except sqlite3.OperationalError:
+            pass
     return con
 
 

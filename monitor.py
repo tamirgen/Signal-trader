@@ -8,6 +8,7 @@ from __future__ import annotations
 import csv
 import datetime as dt
 import html
+import json
 from collections import defaultdict
 
 from common import REPORTS, connect_alpaca, db, latest_prices, load_rules, record_benchmarks
@@ -106,55 +107,136 @@ def tile(label, value, cls=""):
     return f'<div class="tile"><span>{html.escape(label)}</span><b class="{cls}">{html.escape(value)}</b></div>'
 
 
-def render(rows, board, n_skipped, has_keys) -> str:
+def esc(x) -> str:
+    return html.escape("" if x is None else str(x))
+
+
+def activity_html(a: dict | None) -> str:
+    if not a:
+        return '<div class="card empty">No daily activity yet.</div>'
+    items = []
+    for b in a.get("buys", []):
+        why = f"{esc(b['speaker'])} on {esc(b['podcast'])} · {esc(b['confidence'])} confidence · {esc(b.get('reasoning'))}"
+        quote = f'<q>{esc(b["quote"])}</q>' if b.get("quote") else ""
+        items.append(f'<li><span class="tag buy">BUY</span><b>{esc(b["symbol"])}</b> ${float(b["notional"]):,.0f} '
+                     f'<span class="mute">· hold {esc(b["hold_days"])} trading days, exit ≈ {esc(b["est_exit"])} · {esc(b["note"])}</span>'
+                     f'<div class="why">{why}{quote}</div></li>')
+    for x in a.get("exits", []):
+        items.append(f'<li><span class="tag sell">SELL</span><b>{esc(x["symbol"])}</b> '
+                     f'<span class="mute">· horizon reached (entered {esc(x["entry_date"])})</span></li>')
+    for e in a.get("episodes", []):
+        n = f" · {e['mentions']} views" if e.get("mentions") is not None else ""
+        items.append(f'<li><span class="tag ep">EPISODE</span><b>{esc(e["podcast"])}</b> {esc(e["title"])} '
+                     f'<span class="mute">· {esc(e["date"])}{n} · {esc(e["status"])}</span></li>')
+    for err in a.get("errors", []):
+        items.append(f'<li><span class="tag err">PROBLEM</span>{esc(err)}</li>')
+    if not items:
+        items.append('<li class="mute">Nothing new today: no new episodes, trades or exits.</li>')
+    return f'<div class="card"><ul class="feed">{"".join(items)}</ul></div>'
+
+
+def recent_signals_html(con, limit=30) -> str:
+    rows = con.execute(
+        """SELECT e.date, e.podcast, s.speaker, s.asset, s.ticker_stated, s.sentiment, s.confidence,
+                  s.status, s.skip_reason, s.reasoning
+           FROM signals s JOIN episodes e ON e.id = s.episode_id
+           WHERE s.sentiment IN ('bullish', 'bearish') AND s.skip_reason NOT LIKE 'episode excluded%%'
+           ORDER BY e.date DESC, s.status, s.confidence LIMIT ?""".replace("%%", "%"), (limit,)).fetchall()
+    if not rows:
+        return '<div class="card empty">No signals yet.</div>'
+    out = []
+    for r in rows:
+        dec = ('<span class="tag buy">TRADE</span>' if r["status"] == "eligible"
+               else f'<span class="mute small">{esc(r["skip_reason"])}</span>')
+        view = f'<span class="{"pos" if r["sentiment"] == "bullish" else "neg"}">{esc(r["sentiment"])}</span> · {esc(r["confidence"])}'
+        out.append(f'<tr><td>{esc(r["date"])}</td><td>{esc(r["podcast"])}<div class="mute small">{esc(r["speaker"])}</div></td>'
+                   f'<td><b>{esc(r["ticker_stated"] or "")}</b> {esc(r["asset"])}<div class="mute small wrapcell">{esc(r["reasoning"])}</div></td>'
+                   f'<td>{view}</td><td>{dec}</td></tr>')
+    return ('<div class="wrap"><table><thead><tr><th>Date</th><th>Source / speaker</th><th>View</th>'
+            f'<th>Direction</th><th>Decision</th></tr></thead><tbody>{"".join(out)}</tbody></table></div>')
+
+
+def sources_html(a: dict | None) -> str:
+    src = (a or {}).get("sources", [])
+    if not src:
+        return ""
+    chips = "".join(f'<span class="chip {"ok" if s["status"] == "ok" else "bad"}" title="{esc(s["status"])}">'
+                    f'{esc(s["name"])} <span class="mute">· latest {esc(s.get("latest") or "–")}</span></span>' for s in src)
+    return f'<div class="chips">{chips}</div>'
+
+
+def render(rows, board, n_skipped, has_keys, con=None, activity=None) -> str:
     measured = [r for r in rows if "ret" in r]
     alphas = [r["alpha"] for r in measured if "alpha" in r]
     pnl = sum(r.get("pnl", 0) for r in measured)
     avg_alpha = sum(alphas) / len(alphas) if alphas else None
     sign = lambda x: "" if not x else ("pos" if x > 0 else "neg")  # noqa: E731
+    n_open = sum(r["status"] == "open" for r in rows)
+    n_closed = sum(r["status"] == "closed" for r in rows)
     tiles = "".join([
-        tile("Signals traded", f"{sum(r['status'] in ('open', 'closed') for r in rows)} of {len(rows)}"),
-        tile("Open / closed", f"{sum(r['status'] == 'open' for r in rows)} / {sum(r['status'] == 'closed' for r in rows)}"),
         tile("Total P&L", money(pnl) if measured else "–", sign(pnl)),
-        tile("Hit rate", f"{sum(r['ret'] > 0 for r in measured) / len(measured) * 100:.0f}%" if measured else "–"),
         tile("Avg alpha vs SPY", pct(avg_alpha), sign(avg_alpha)),
-        tile("Skipped mentions", str(n_skipped)),
+        tile("Hit rate", f"{sum(r['ret'] > 0 for r in measured) / len(measured) * 100:.0f}%" if measured else "–"),
+        tile("Open positions", str(n_open)),
+        tile("Closed", str(n_closed)),
+        tile("Mentions screened", str(n_skipped + len(rows))),
     ])
-    warn = "" if has_keys else '<p class="warn">No Alpaca keys: showing planned signals only, no fills or prices.</p>'
-    stamp = dt.datetime.now().astimezone().strftime("%Y-%m-%d %H:%M %Z")
+    warn = "" if has_keys else '<p class="warn">No Alpaca keys: showing signals only, no fills or prices.</p>'
+    stamp = dt.datetime.now().astimezone().strftime("%b %d, %Y · %H:%M %Z")
     board_cols = [("by", "Group"), ("name", "Name"), ("signals", "Signals"), ("hit_rate", "Hit rate"),
                   ("avg_return", "Avg return"), ("avg_alpha", "Avg alpha"), ("pnl", "P&L")]
-    pos_cols = [("ticker", "Ticker"), ("status", "Status"), ("speaker", "Speaker"), ("podcast", "Podcast"),
-                ("entry_date", "Entry"), ("entry_px", "Entry px"), ("qty", "Qty"), ("mark_px", "Mark / exit px"),
-                ("ret", "Return"), ("spy_ret", "SPY"), ("alpha", "Alpha"), ("pnl", "P&L"),
-                ("hold_days", "Hold days"), ("exit_date", "Exited")]
+    pos_cols = [("ticker", "Ticker"), ("status", "Status"), ("speaker", "Speaker"), ("podcast", "Source"),
+                ("entry_date", "Entry"), ("entry_px", "Entry px"), ("mark_px", "Last / exit px"),
+                ("ret", "Return"), ("spy_ret", "SPY"), ("alpha", "Alpha"), ("pnl", "P&L"), ("hold_days", "Hold days")]
+    today = esc((activity or {}).get("date", ""))
     return f"""<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Signal Trader Report</title>
+<title>Signal Trader</title>
 <style>
-:root {{ --bg:#fafaf9; --card:#fff; --fg:#1c1917; --mute:#78716c; --line:#e7e5e4; --pos:#15803d; --neg:#b91c1c; }}
-@media (prefers-color-scheme: dark) {{ :root {{ --bg:#141210; --card:#1c1a17; --fg:#f5f5f4; --mute:#a8a29e; --line:#2e2b27; --pos:#4ade80; --neg:#f87171; }} }}
+:root {{ --bg:#f7f7f5; --card:#fff; --fg:#18181b; --mute:#71717a; --line:#e4e4e7; --pos:#15803d; --neg:#b91c1c;
+        --accent:#2563eb; --chip-ok:#ecfdf5; --chip-bad:#fef2f2; }}
+@media (prefers-color-scheme: dark) {{ :root {{ --bg:#111113; --card:#1a1a1d; --fg:#f4f4f5; --mute:#a1a1aa; --line:#2a2a2e;
+        --pos:#4ade80; --neg:#f87171; --accent:#60a5fa; --chip-ok:#052e1c; --chip-bad:#3b0d0d; }} }}
 * {{ box-sizing:border-box; }}
-body {{ margin:0; background:var(--bg); color:var(--fg); font:14px/1.5 system-ui,-apple-system,sans-serif; }}
-main {{ max-width:1180px; margin:0 auto; padding:24px 16px 48px; }}
-h1 {{ font-size:22px; margin:0; }} h2 {{ font-size:15px; margin:32px 0 10px; }}
-.sub, .note {{ color:var(--mute); }} .note {{ font-size:12px; margin-top:24px; }} .warn {{ color:var(--neg); }}
-.tiles {{ display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:12px; margin-top:20px; }}
-.tile {{ background:var(--card); border:1px solid var(--line); border-radius:10px; padding:12px 14px; }}
-.tile span {{ color:var(--mute); font-size:12px; }} .tile b {{ display:block; font-size:22px; font-weight:600; margin-top:2px; }}
-.wrap {{ overflow-x:auto; background:var(--card); border:1px solid var(--line); border-radius:10px; }}
+body {{ margin:0; background:var(--bg); color:var(--fg); font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif; }}
+main {{ max-width:1120px; margin:0 auto; padding:28px 16px 56px; }}
+header {{ display:flex; justify-content:space-between; align-items:baseline; flex-wrap:wrap; gap:8px; }}
+h1 {{ font-size:24px; margin:0; letter-spacing:-.01em; }} h2 {{ font-size:13px; text-transform:uppercase; letter-spacing:.06em;
+     color:var(--mute); margin:36px 0 10px; font-weight:600; }}
+.mute {{ color:var(--mute); }} .small {{ font-size:12px; }} .warn {{ color:var(--neg); }}
+.badge {{ font-size:12px; padding:2px 8px; border-radius:999px; border:1px solid var(--line); color:var(--mute); }}
+.tiles {{ display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:12px; margin-top:20px; }}
+.tile, .card {{ background:var(--card); border:1px solid var(--line); border-radius:12px; }}
+.tile {{ padding:14px 16px; }} .tile span {{ color:var(--mute); font-size:12px; }}
+.tile b {{ display:block; font-size:24px; font-weight:600; margin-top:4px; font-variant-numeric:tabular-nums; }}
+.card {{ padding:4px 16px; }} .card.empty {{ padding:16px; color:var(--mute); }}
+.feed {{ list-style:none; margin:0; padding:0; }} .feed li {{ padding:12px 0; border-bottom:1px solid var(--line); }}
+.feed li:last-child {{ border-bottom:0; }} .why {{ margin-top:4px; color:var(--mute); }}
+q {{ display:block; margin-top:4px; font-style:italic; }}
+.tag {{ display:inline-block; font-size:11px; font-weight:600; letter-spacing:.04em; padding:1px 7px; border-radius:6px; margin-right:8px; }}
+.tag.buy {{ background:var(--chip-ok); color:var(--pos); }} .tag.sell {{ background:var(--chip-bad); color:var(--neg); }}
+.tag.ep {{ background:var(--bg); color:var(--accent); border:1px solid var(--line); }} .tag.err {{ background:var(--chip-bad); color:var(--neg); }}
+.chips {{ display:flex; flex-wrap:wrap; gap:8px; margin-top:12px; }}
+.chip {{ font-size:12px; padding:4px 10px; border-radius:999px; border:1px solid var(--line); background:var(--card); }}
+.chip.ok::before {{ content:"●"; color:var(--pos); margin-right:6px; }} .chip.bad::before {{ content:"●"; color:var(--neg); margin-right:6px; }}
+.wrap {{ overflow-x:auto; background:var(--card); border:1px solid var(--line); border-radius:12px; }}
 table {{ border-collapse:collapse; width:100%; font-variant-numeric:tabular-nums; }}
-th, td {{ padding:8px 12px; border-bottom:1px solid var(--line); white-space:nowrap; text-align:left; }}
+th, td {{ padding:10px 14px; border-bottom:1px solid var(--line); white-space:nowrap; text-align:left; vertical-align:top; }}
 th {{ font-size:12px; color:var(--mute); font-weight:600; }} tr:last-child td {{ border-bottom:0; }}
+.wrapcell {{ white-space:normal; max-width:520px; }}
 .num {{ text-align:right; }} .pos {{ color:var(--pos); }} .neg {{ color:var(--neg); }} .empty {{ color:var(--mute); text-align:center; }}
+footer {{ font-size:12px; color:var(--mute); margin-top:32px; }}
 </style></head><body><main>
-<h1>Signal Trader</h1><div class="sub">Alpaca paper account · {html.escape(stamp)}</div>{warn}
+<header><h1>Signal Trader</h1><span class="badge">Paper account · updated {esc(stamp)}</span></header>
+{warn}{sources_html(activity)}
 <div class="tiles">{tiles}</div>
-<h2>Leaderboard</h2>{table(board, board_cols)}
+<h2>Today {('· ' + today) if today else ''}</h2>{activity_html(activity)}
 <h2>Positions</h2>{table(rows, pos_cols)}
-<p class="note">Return is per signal from the entry fill to the exit fill, or to the latest price while open.
-SPY is a hypothetical $1,000 purchase at the entry fill time. Alpha = return − SPY return over the same window.
-Hit rate = share of signals with a positive return.</p>
+<h2>Leaderboard</h2>{table(board, board_cols)}
+<h2>Recent signals</h2>{recent_signals_html(con) if con is not None else ''}
+<footer>Return runs from the entry fill to the exit fill, or to the latest price while open. SPY is a hypothetical $1,000
+purchase at each entry's fill time; alpha = return − SPY return over the same window. Hit rate = share of signals with a
+positive return. Paper trading only; not investment advice.</footer>
 </main></body></html>"""
 
 
@@ -186,7 +268,11 @@ def main():
                "entry_px", "qty", "mark_px", "exit_date", "ret", "spy_ret", "alpha", "pnl", "hold_days"])
     write_csv(REPORTS / "leaderboard.csv", board,
               ["by", "name", "signals", "hit_rate", "avg_return", "avg_alpha", "pnl"])
-    (REPORTS / "report.html").write_text(render(rows, board, n_skipped, tc is not None))
+    try:
+        activity = json.loads((REPORTS / "activity.json").read_text())
+    except FileNotFoundError:
+        activity = None
+    (REPORTS / "report.html").write_text(render(rows, board, n_skipped, tc is not None, con, activity))
     print(f"wrote {REPORTS / 'report.html'}, signals.csv, leaderboard.csv "
           f"({sum('ret' in r for r in rows)} signals with prices)")
 

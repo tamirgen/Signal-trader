@@ -49,7 +49,7 @@ def plan_entries(con, rules, tc) -> list[dict]:
                "hold_days": s["hold_days"], "intended_open": intended.isoformat(),
                "session": session.isoformat(),
                "est_exit": add_trading_days(session, s["hold_days"]).isoformat(),
-               "mention_id": s["mention_id"]}
+               "mention_id": s["mention_id"], "reasoning": s["reasoning"], "quote": s["quote"]}
         existing = con.execute("SELECT status FROM orders WHERE client_order_id = ?", (coid,)).fetchone()
         if existing:
             row.update(action="EXISTS", note=f"already on Alpaca ({existing['status']})"
@@ -107,7 +107,8 @@ def main():
         place(con, tc, plan)
 
     cols = ["action", "symbol", "side", "notional", "session", "intended_open", "est_exit", "hold_days",
-            "bucket", "horizon", "episode", "podcast", "speaker", "confidence", "client_order_id", "note"]
+            "bucket", "horizon", "episode", "podcast", "speaker", "confidence", "client_order_id", "note",
+            "reasoning", "quote"]
     write_csv(REPORTS / "planned_orders.csv", plan, cols)
     skipped = [dict(r) for r in con.execute(
         """SELECT e.id AS episode, e.podcast, e.date, s.speaker, s.asset, s.ticker_stated, s.sentiment,

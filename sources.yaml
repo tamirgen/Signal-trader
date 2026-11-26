@@ -1,0 +1,43 @@
+# Where new episodes come from. fetch.py checks every source once a day.
+#
+# type: podcast  -> RSS feed. If feed_url is empty, the feed is looked up in the Apple Podcasts
+#                   directory by `search`, and accepted only if the feed text contains every
+#                   `match` keyword. The URL found is saved in state/sources.json; set feed_url
+#                   here to pin it.
+# type: youtube  -> YouTube channel: new videos from the channel's feed, transcript from its captions.
+#                   `handle` is the channel's @name; set channel_id (UC...) to pin it. The channel
+#                   title must contain every `match` keyword.
+# type: fomc     -> Federal Reserve press conference transcripts (PDF on federalreserve.gov).
+# Anything else (earnings calls, filings, letters): upload a .txt/.md/.pdf into inbox/ (see README).
+
+settings:
+  lookback_days: 4            # only episodes published in the last N days are considered
+  max_episodes_per_source: 2  # per run, to cap API spend
+  min_transcript_chars: 15000  # shorter = a clip or short, not a full episode
+  max_transcript_chars: 600000
+
+sources:
+  - name: All-In
+    type: youtube
+    source: YouTube finance shows
+    handle: "@allin"
+    match: [All-In]
+    channel_id: ""
+
+  - name: Table Four
+    type: podcast
+    source: Podcasts
+    search: "Table Four"
+    match: [Adiri]
+    feed_url: ""
+
+  - name: "Masters in Business"
+    type: podcast
+    source: Masters in Business
+    search: "Masters in Business Barry Ritholtz"
+    match: [Ritholtz]
+    feed_url: ""
+
+  - name: FOMC press conference
+    type: fomc
+    source: Fed and FOMC

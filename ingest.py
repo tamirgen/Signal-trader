@@ -36,10 +36,11 @@ def ingest(path, rules) -> dict:
     for ep in json.load(open(path)):
         counts["episodes"] += 1
         con.execute(
-            """INSERT INTO episodes (id, podcast, source, date, summary) VALUES (?,?,?,?,?)
+            """INSERT INTO episodes (id, podcast, source, date, summary, title, url) VALUES (?,?,?,?,?,?,?)
                ON CONFLICT(id) DO UPDATE SET podcast=excluded.podcast, source=excluded.source,
-               date=excluded.date, summary=excluded.summary""",
-            (ep["id"], ep.get("podcast"), ep.get("source") or "unknown", ep["date"], ep.get("summary")))
+               date=excluded.date, summary=excluded.summary, title=excluded.title, url=excluded.url""",
+            (ep["id"], ep.get("podcast"), ep.get("source") or "unknown", ep["date"], ep.get("summary"),
+             ep.get("title"), ep.get("url")))
         for i, m, ticker, reason in classify_episode(ep, rules):
             mid = f"{ep['id']}#{i}"
             bucket = horizon_bucket(m.get("horizon"), rules)
@@ -47,18 +48,18 @@ def ingest(path, rules) -> dict:
             con.execute("UPDATE signals SET status = 'skipped' WHERE mention_id = ?", (mid,))
             con.execute(
                 """INSERT INTO signals (mention_id, episode_id, asset, sentiment, speaker, confidence, horizon,
-                       claim_type, ticker_stated, ticker_inferred, catalyst_date, ticker, horizon_bucket,
-                       hold_days, status, skip_reason)
-                   VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+                       claim_type, ticker_stated, ticker_inferred, catalyst_date, reasoning, quote, ticker,
+                       horizon_bucket, hold_days, status, skip_reason)
+                   VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
                    ON CONFLICT(mention_id) DO UPDATE SET asset=excluded.asset, sentiment=excluded.sentiment,
                        speaker=excluded.speaker, confidence=excluded.confidence, horizon=excluded.horizon,
                        claim_type=excluded.claim_type, ticker_stated=excluded.ticker_stated,
                        ticker_inferred=excluded.ticker_inferred, catalyst_date=excluded.catalyst_date,
-                       ticker=excluded.ticker, horizon_bucket=excluded.horizon_bucket,
+                       reasoning=excluded.reasoning, quote=excluded.quote, ticker=excluded.ticker, horizon_bucket=excluded.horizon_bucket,
                        hold_days=excluded.hold_days, status=excluded.status, skip_reason=excluded.skip_reason""",
                 (mid, ep["id"], m.get("asset"), m.get("sentiment"), m.get("speaker") or "unknown",
                  m.get("confidence"), m.get("horizon"), m.get("claim_type"), m.get("ticker_stated"),
-                 m.get("ticker_inferred"), m.get("catalyst_date"), ticker, bucket,
+                 m.get("ticker_inferred"), m.get("catalyst_date"), m.get("reasoning"), m.get("quote"), ticker, bucket,
                  rules["horizons"][bucket], "skipped" if reason else "eligible", reason))
             counts["mentions"] += 1
             counts["eligible"] += reason is None

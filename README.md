@@ -1,6 +1,39 @@
 # signal-trader
 
-Turns investing signals extracted from podcast and finance transcripts (`signals.json`) into **Alpaca paper** trades, compares each one to a hypothetical SPY purchase, and reports the results.
+Watches finance podcasts, YouTube channels and Fed press conferences for new episodes. Claude extracts the investing views from each transcript into `signals.json`, the qualifying ones become **Alpaca paper** trades, and each trade is compared with a hypothetical SPY purchase. Every day, a dashboard and a "what and why" activity report are published.
+
+## Daily pipeline (`run_daily.sh`, run by GitHub Actions every morning)
+
+1. `fetch.py`: checks each source in `sources.yaml` and the `inbox/` folder for new episodes, gets the transcript, has Claude extract the signals, and appends them to `signals.json`.
+2. `ingest.py`: loads `signals.json` into SQLite and applies the rules.
+3. On US trading days, `trade.py` places entries and `exits.py` closes positions whose horizon has ended.
+4. `activity.py`: writes the daily report (`activity/YYYY-MM-DD.md`, plus the run's summary page on GitHub).
+5. `monitor.py`: builds the dashboard (`reports/report.html`), which is published to GitHub Pages.
+
+The job commits new signals, feed state and the activity log back to the repo, so `signals.json` and `activity/` are the full history.
+
+## Sources (`sources.yaml`)
+
+| Type | How new episodes are found | Transcript |
+|---|---|---|
+| `youtube` | the channel's video feed | YouTube captions |
+| `podcast` | the show's RSS feed, found automatically in Apple Podcasts | the feed's own transcript, or Deepgram speech-to-text on the audio |
+| `fomc` | federalreserve.gov press conference list | the Fed's transcript PDF |
+| `inbox/` | any `.txt` / `.pdf` you upload there (earnings calls, filings, letters) | the file itself |
+
+Only episodes from the last `lookback_days` are considered, at most `max_episodes_per_source` per source per day. Videos with short transcripts (clips) are skipped. Spotify has no public transcript API, so it can't be used as a source.
+
+## Secrets and settings (Settings → Secrets and variables → Actions)
+
+| Name | Kind | Needed for |
+|---|---|---|
+| `ALPACA_KEY`, `ALPACA_SECRET` | secret | trading and the dashboard (paper keys) |
+| `ANTHROPIC_API_KEY` | secret | extracting signals from transcripts (Claude) |
+| `DEEPGRAM_API_KEY` | secret, optional | podcasts whose feed has no transcript |
+| `YOUTUBE_PROXY_URL` | secret, optional | if YouTube blocks GitHub's servers (`http://user:pass@host:port`) |
+| `LIVE_PAPER` | variable | `true` = place paper orders; anything else = dry run |
+
+**Dashboard:** enable once in Settings → Pages → Source: **GitHub Actions**. It is then published at `https://<owner>.github.io/<repo>/`. The repo is public, so the dashboard is too: it shows paper positions and P&L, never keys.
 
 ## Setup
 
@@ -15,11 +48,13 @@ Credentials are read only from environment variables or `.env`, and are never pr
 ## Run
 
 ```bash
+python fetch.py            # new episodes -> transcripts -> Claude -> signals.json (--dry-run: find only)
 python ingest.py           # signals.json -> signal_trader.db (episodes, signals, orders, benchmarks)
 python trade.py            # DRY RUN (default): planned orders + skipped signals, also in reports/*.csv
 python trade.py --paper    # place the entry orders on Alpaca paper
 python exits.py            # DRY RUN: positions past their horizon
 python exits.py --paper    # sell them
+python activity.py         # today's what-and-why report -> activity/YYYY-MM-DD.md
 python monitor.py          # sync fills/positions -> reports/report.html, signals.csv, leaderboard.csv
 ./run_daily.sh [--paper]   # all of the above, only on US trading days
 python -m unittest discover -s tests -v
@@ -47,14 +82,8 @@ The same data is in `signals.csv` and `leaderboard.csv`.
 
 ## Schedule
 
-`.github/workflows/daily.yml` runs the tests and then `run_daily.sh` at 13:07 UTC on weekdays, before the US open. The script exits early on market holidays. The workflow uploads `reports/` as a build artifact.
-
-1. Add the repository secrets `ALPACA_KEY` and `ALPACA_SECRET`.
-2. The workflow stays a dry run until you set the repository variable `LIVE_PAPER=true`.
-3. The runner keeps no database. Order state is rebuilt from Alpaca on each run using the client_order_ids, and benchmark prices are re-derived from market data.
-
-Local cron alternative (server clock in ET):
-
-```
-7 9 * * 1-5  cd /path/to/signal-trader && ./run_daily.sh --paper >> run.log 2>&1
-```
+`.github/workflows/daily.yml` runs every day at 12:17 UTC (7:17 ET in winter, 8:17 ET in summer):
+- It fetches new episodes every day.
+- On trading days it also trades before the 9:30 ET open, so orders fill at the open.
+- It runs the tests first, uploads `reports/` as a build artifact, and deploys the dashboard.
+- The runner keeps no database. Order state is rebuilt from Alpaca using the client_order_ids, and benchmark prices are re-derived from market data.

@@ -10,7 +10,9 @@ from __future__ import annotations
 import argparse
 import datetime as dt
 
-from common import (ET, add_trading_days, assert_paper, connect_alpaca, current_session, db,
+import csv
+
+from common import (ET, REPORTS, add_trading_days, assert_paper, connect_alpaca, current_session, db,
                     exit_coid, fetch_order, save_order)
 
 
@@ -42,6 +44,7 @@ def main():
     if paper:
         assert_paper(tc)
     exits = due_exits(con, current_session())
+    done = []
     if not exits:
         print("No filled entries awaiting exit.")
     for e in exits:
@@ -64,7 +67,14 @@ def main():
                 symbol=e["symbol"], qty=qty, side=OrderSide.SELL, time_in_force=TimeInForce.DAY,
                 client_order_id=e["client_order_id"]))
             save_order(con, o, e["mention_id"], "exit")
+        done.append({**e, "qty": qty, "action": "SELL" if paper else "SELL (dry run)"})
     con.commit()
+    REPORTS.mkdir(exist_ok=True)
+    with open(REPORTS / "exits.csv", "w", newline="") as f:
+        w = csv.DictWriter(f, fieldnames=["action", "symbol", "qty", "entry_date", "exit_on", "client_order_id"],
+                           extrasaction="ignore")
+        w.writeheader()
+        w.writerows(done)
 
 
 if __name__ == "__main__":

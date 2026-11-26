@@ -1,14 +1,22 @@
 name: daily
 on:
   schedule:
-    # 13:07 UTC on weekdays = 08:07 ET (winter) / 09:07 ET (summer): before the 09:30 open,
-    # so market orders queue for the open. run_daily.sh exits early on market holidays.
-    - cron: "7 13 * * 1-5"
+    # Every day at 12:17 UTC = 07:17 ET (winter) / 08:17 ET (summer): fetch new episodes, then
+    # trade before the 09:30 open on trading days so market orders fill at the open.
+    - cron: "17 12 * * *"
   workflow_dispatch:
+
+concurrency:
+  group: daily
+  cancel-in-progress: false
+
+permissions:
+  contents: write   # commit new signals, feed state and the activity log back to the repo
 
 jobs:
   run:
     runs-on: ubuntu-latest
+    timeout-minutes: 60
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -17,14 +25,48 @@ jobs:
       - run: pip install -r requirements.txt
       - run: python -m unittest discover -s tests
       # Orders are placed only when the repository variable LIVE_PAPER is "true".
-      # The runner keeps no database: order state is rebuilt from Alpaca via client_order_ids.
+      # Order state is rebuilt from Alpaca each run via client_order_ids; no database is kept.
       - run: ./run_daily.sh ${{ vars.LIVE_PAPER == 'true' && '--paper' || '' }}
         env:
           ALPACA_KEY: ${{ secrets.ALPACA_KEY }}
           ALPACA_SECRET: ${{ secrets.ALPACA_SECRET }}
           ALPACA_BASE_URL: https://paper-api.alpaca.markets
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          DEEPGRAM_API_KEY: ${{ secrets.DEEPGRAM_API_KEY }}
+          YOUTUBE_PROXY_URL: ${{ secrets.YOUTUBE_PROXY_URL }}
+      - name: Save new signals and activity log
+        if: always()
+        run: |
+          git config user.name "signal-trader-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add signals.json state activity inbox 2>/dev/null || true
+          if ! git diff --cached --quiet; then
+            git commit -m "Daily update $(TZ=America/New_York date +%F)"
+            git pull --rebase origin main && git push origin HEAD:main
+          fi
+      - run: mkdir -p site && cp reports/report.html site/index.html
+        if: always()
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: report
           path: reports/
+      - uses: actions/upload-pages-artifact@v3
+        if: always()
+        with:
+          path: site
+
+  # Publishes the dashboard. Needs Settings -> Pages -> Source: "GitHub Actions" (one-time).
+  pages:
+    needs: run
+    if: always()
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - id: deploy
+        uses: actions/deploy-pages@v4
