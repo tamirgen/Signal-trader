@@ -1878,5 +1878,249 @@
    }
   ],
   "theme_ideas": []
+ },
+ {
+  "id": "masters-in-business-2026-11-27-db69",
+  "podcast": "Masters in Business",
+  "source": "Masters in Business",
+  "date": "2026-11-27",
+  "title": "Managing $300 Billion for Ultra Wealthy Families: Masters in Business with Holly MacDonald",
+  "url": "https://omny.fm/shows/masters-in-business/managing-300-billion-for-ultra-wealthy-families-masters-in-business-with-holly-macdonald",
+  "transcript_source": "feed transcript",
+  "savedAt": 1795814151766,
+  "summary": "Barry Ritholtz interviews Holly MacDonald, CEO of Bessemer Trust ($300B+ multifamily office), about wealth preservation, liquidity planning, diversification of concentrated positions and family dynamics. On markets, she says Bessemer remains overweight US equities, though it trimmed that overweight a couple of years ago because non-US stocks were cheap. She thinks 'dollar doomsayers' are overstated, sees no meaningful challenger to the dollar, and attributes this year's rise in real yields mainly to upside US growth tied to the AI build-out. Portfolios are overweight equities and underweight fixed income, but she calls ~5% risk-free yields attractive, expects bonds to rally in most downside scenarios, sees little near-term recession or inflation-spike risk, and favors munis and skilled private-asset investing.",
+  "themes": [
+   {
+    "theme": "US exceptionalism and growth leadership",
+    "market_impact": "Supports a continued, though trimmed, US equity overweight and a constructive dollar view despite strong recent non-US performance."
+   },
+   {
+    "theme": "AI build-out driving growth and real yields",
+    "market_impact": "Upside growth surprise is seen as the main driver of higher real yields. A failure of the AI build-out is a key downside scenario in which bonds would serve as a hedge."
+   },
+   {
+    "theme": "Bonds as attractive defensive ballast at ~5% yields",
+    "market_impact": "Fixed income is underweight versus equities but valued for income, tax-advantaged munis and price appreciation in downside scenarios."
+   },
+   {
+    "theme": "Private markets dispersion",
+    "market_impact": "Excess returns are expected for long-horizon investors with access to top managers. Wide dispersion makes manager selection critical."
+   },
+   {
+    "theme": "Diversifying concentrated wealth",
+    "market_impact": "Gradual selling of concentrated single-stock positions, using tax-mitigation strategies, to reduce tail risk."
+   }
+  ],
+  "catalysts": [],
+  "mentions": [
+   {
+    "asset": "US equities",
+    "sentiment": "bullish",
+    "speaker": "Holly MacDonald",
+    "confidence": "high",
+    "horizon": "long",
+    "claim_type": "opinion",
+    "kind": "asset class",
+    "ticker_stated": "",
+    "ticker_inferred": "SPY",
+    "catalyst_date": "",
+    "reasoning": "Bessemer sees the US as the major engine of global growth and holds an overweight to US equities (about 68% of equity portfolios), though it trimmed the overweight on valuation grounds.",
+    "quote": "We have an overweight to the U.S.",
+    "timestamp": ""
+   },
+   {
+    "asset": "Non-US equities",
+    "sentiment": "mixed",
+    "speaker": "Holly MacDonald",
+    "confidence": "medium",
+    "horizon": "medium",
+    "claim_type": "opinion",
+    "kind": "asset class",
+    "ticker_stated": "",
+    "ticker_inferred": "EFA,VEU",
+    "catalyst_date": "",
+    "reasoning": "She added to non-US exposure because good companies were available at cheap prices. She still says it would be unwise to fade the US too meaningfully.",
+    "quote": "there were good companies at a pretty cheap price",
+    "timestamp": ""
+   },
+   {
+    "asset": "Equities vs fixed income allocation",
+    "sentiment": "bullish",
+    "speaker": "Holly MacDonald",
+    "confidence": "high",
+    "horizon": "medium",
+    "claim_type": "opinion",
+    "kind": "asset class",
+    "ticker_stated": "",
+    "ticker_inferred": "",
+    "catalyst_date": "",
+    "reasoning": "Bessemer tilts overweight equities and underweight fixed income because of a positive US and global growth backdrop and a very low chance of near-term recession.",
+    "quote": "We are tilted overweight to equities and underweight fixed income, given the positive growth backdrop",
+    "timestamp": ""
+   },
+   {
+    "asset": "US dollar",
+    "sentiment": "bullish",
+    "speaker": "Holly MacDonald",
+    "confidence": "medium",
+    "horizon": "long",
+    "claim_type": "opinion",
+    "kind": "macro",
+    "ticker_stated": "",
+    "ticker_inferred": "UUP",
+    "catalyst_date": "",
+    "reasoning": "She cites strong US growth driving real yields, the dollar's transaction and store-of-value roles, and a lack of attractive competitor currencies.",
+    "quote": "I think some of the dollar doomsdayers, though, are really overstated.",
+    "timestamp": ""
+   },
+   {
+    "asset": "Dollar challengers (euro, yen, yuan, cryptocurrency)",
+    "sentiment": "bearish",
+    "speaker": "Holly MacDonald",
+    "confidence": "low",
+    "horizon": "long",
+    "claim_type": "opinion",
+    "kind": "macro",
+    "ticker_stated": "",
+    "ticker_inferred": "FXE,FXY",
+    "catalyst_date": "",
+    "reasoning": "She doesn't mind holding some euros and yen, but sees none of these, nor China or crypto, as a meaningful long-term challenger to the dollar.",
+    "quote": "there's really no meaningful challenger to the dollar right now",
+    "timestamp": ""
+   },
+   {
+    "asset": "Bonds / fixed income",
+    "sentiment": "mixed",
+    "speaker": "Holly MacDonald",
+    "confidence": "medium",
+    "horizon": "medium",
+    "claim_type": "opinion",
+    "kind": "asset class",
+    "ticker_stated": "",
+    "ticker_inferred": "AGG,TLT",
+    "catalyst_date": "",
+    "reasoning": "Bonds are held underweight, but she calls ~5% risk-free yields attractive and expects bonds to appreciate in most downside scenarios, such as AI disappointment or a geopolitical growth hit.",
+    "quote": "In most scenarios, bonds, I believe, will play that important defensive role in portfolios and actually show price appreciation",
+    "timestamp": ""
+   },
+   {
+    "asset": "Municipal bonds",
+    "sentiment": "bullish",
+    "speaker": "Holly MacDonald",
+    "confidence": "medium",
+    "horizon": "long",
+    "claim_type": "opinion",
+    "kind": "asset class",
+    "ticker_stated": "",
+    "ticker_inferred": "MUB",
+    "catalyst_date": "",
+    "reasoning": "She highlights the tax benefits of munis for wealthy clients and says Bessemer is very active in the space.",
+    "quote": "there are some tax benefits, particularly in the municipal space.",
+    "timestamp": ""
+   },
+   {
+    "asset": "US economic growth / recession risk",
+    "sentiment": "bullish",
+    "speaker": "Holly MacDonald",
+    "confidence": "medium",
+    "horizon": "short",
+    "claim_type": "prediction",
+    "kind": "macro",
+    "ticker_stated": "",
+    "ticker_inferred": "",
+    "catalyst_date": "",
+    "reasoning": "US growth this year has surprised to the upside, tied to the AI build-out, and she sees very little chance of a near-term recession.",
+    "quote": "there's very little chance of a recession in the near term",
+    "timestamp": ""
+   },
+   {
+    "asset": "US inflation",
+    "sentiment": "bearish",
+    "speaker": "Holly MacDonald",
+    "confidence": "medium",
+    "horizon": "short",
+    "claim_type": "prediction",
+    "kind": "macro",
+    "ticker_stated": "",
+    "ticker_inferred": "",
+    "catalyst_date": "",
+    "reasoning": "She sees limited chance of an inflation spike, viewing the rise in rates as growth-driven rather than inflation-driven.",
+    "quote": "I also think there's pretty limited chance of an inflation spike.",
+    "timestamp": ""
+   },
+   {
+    "asset": "AI build-out",
+    "sentiment": "bullish",
+    "speaker": "Holly MacDonald",
+    "confidence": "medium",
+    "horizon": "long",
+    "claim_type": "opinion",
+    "kind": "sector",
+    "ticker_stated": "",
+    "ticker_inferred": "",
+    "catalyst_date": "",
+    "reasoning": "The AI build-out is driving US growth and real yields, and she does not want to fade it. She flags it falling short of market expectations as a downside risk and wants more debate on AI ethics.",
+    "quote": "Those are not stories that I want to fade meaningfully.",
+    "timestamp": ""
+   },
+   {
+    "asset": "Private equity / private assets",
+    "sentiment": "bullish",
+    "speaker": "Holly MacDonald",
+    "confidence": "medium",
+    "horizon": "long",
+    "claim_type": "opinion",
+    "kind": "asset class",
+    "ticker_stated": "",
+    "ticker_inferred": "",
+    "catalyst_date": "",
+    "reasoning": "Long-horizon investors without immediate liquidity needs can earn excess returns, but wide manager dispersion requires expertise.",
+    "quote": "there will continue to be, excess returns for those who can make very strategic decisions in.",
+    "timestamp": ""
+   }
+  ],
+  "theme_ideas": [
+   {
+    "theme": "semiconductors_ai_compute",
+    "event": "The AI build-out is driving an upside surprise in US growth and pushing real yields higher, and a major wealth manager says it does not want to fade it.",
+    "effect": "tailwind",
+    "strength": "medium",
+    "horizon": "medium",
+    "causal_chain": "Continued AI data center capex -> sustained demand for GPUs, memory and chip equipment -> revenue and earnings upside for chip makers",
+    "invalidation": "The AI build-out falls short of market expectations (she names this as a key downside scenario), or hyperscalers cut capex guidance.",
+    "picks": [
+     "SMH",
+     "NVDA"
+    ],
+    "speakers": "Holly MacDonald"
+   },
+   {
+    "theme": "broad_us_equities",
+    "event": "US growth is surprising to the upside, recession risk looks very low and an inflation spike looks unlikely, so Bessemer stays overweight US equities versus bonds.",
+    "effect": "tailwind",
+    "strength": "medium",
+    "horizon": "long",
+    "causal_chain": "Growth-driven (not inflation-driven) rise in yields plus low recession risk -> earnings growth supports US equities -> continued equity overweight by large allocators",
+    "invalidation": "Clear signs of a US recession, a renewed inflation spike forcing tighter policy, or a geopolitical shock that hits growth.",
+    "picks": [
+     "SPY"
+    ],
+    "speakers": "Holly MacDonald"
+   },
+   {
+    "theme": "banks_rates_up",
+    "event": "Real yields have risen this year on stronger US growth, and she expects risk-free yields of about 5% to persist absent a downturn.",
+    "effect": "tailwind",
+    "strength": "low",
+    "horizon": "medium",
+    "causal_chain": "Growth-driven higher-for-longer rates -> wider net interest margins and healthy credit -> bank earnings support",
+    "invalidation": "Yields fall sharply because AI disappoints or the economy weakens, or credit conditions deteriorate.",
+    "picks": [
+     "XLF",
+     "JPM"
+    ],
+    "speakers": "Holly MacDonald"
+   }
+  ]
  }
 ]
