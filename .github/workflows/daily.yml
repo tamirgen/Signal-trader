@@ -1,9 +1,12 @@
 name: daily
 on:
   schedule:
-    # Every day at 12:17 UTC = 07:17 ET (winter) / 08:17 ET (summer): fetch new episodes, then
-    # trade before the 09:30 open on trading days so market orders fill at the open.
+    # Fetch new episodes every day, then trade before the 09:30 ET open on trading days so market orders
+    # fill at the open. GitHub's scheduler is best-effort and sometimes skips or delays a run, so there are
+    # two attempts: 12:17 UTC (07:17 ET winter) and 13:07 UTC (08:07 ET winter). Running twice is safe:
+    # order ids are fixed, so nothing is bought twice, and each run's report is appended to the day's file.
     - cron: "17 12 * * *"
+    - cron: "7 13 * * *"
   workflow_dispatch:
 
 concurrency:

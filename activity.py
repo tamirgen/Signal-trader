@@ -127,13 +127,21 @@ def to_markdown(a: dict) -> str:
     return "\n".join(L) + "\n"
 
 
+def append_report(path: Path, md: str) -> None:
+    """Keep every run's report for the day: a later run adds a section instead of overwriting the trades
+    an earlier run recorded."""
+    if path.exists() and path.read_text().strip():
+        md = path.read_text().rstrip() + "\n\n---\n\n" + md
+    path.write_text(md)
+
+
 def main():
     a = build()
     md = to_markdown(a)
     REPORTS.mkdir(exist_ok=True)
     (REPORTS / "activity.json").write_text(json.dumps(a, indent=1, default=str))
     ACTIVITY.mkdir(exist_ok=True)
-    (ACTIVITY / f"{a['date']}.md").write_text(md)
+    append_report(ACTIVITY / f"{a['date']}.md", md)
     if os.environ.get("GITHUB_STEP_SUMMARY"):
         with open(os.environ["GITHUB_STEP_SUMMARY"], "a") as f:
             f.write(md)
